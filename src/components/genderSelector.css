@@ -1,0 +1,67 @@
+/* Gender selector made by: csozi | Website: www.csozi.hu*/
+
+.radio-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    scale: 0.7;
+    margin-bottom: -40px;
+  }
+  
+  .radio-input input {
+    height: 50px;
+    width: 50px;
+    translate: 0px 55px;
+    opacity: 0;
+    z-index: 10;
+  }
+  
+  .card {
+    height: 50px;
+    width: 50px;
+    border: solid rgb(82, 89, 112);
+    background-color: rgb(240, 232, 232);
+    border-radius: 10px;
+    translate: 0px -55px;
+    position: relative;
+    z-index: 9;
+    transition: 0.2s;
+    color: gray;
+  }
+  
+  .logo {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    translate: -50% 0px;
+  }
+  
+  .card .title {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-size: 10px;
+    bottom: 0px;
+    font-weight: bold;
+  }
+  
+  .i_female:hover ~ .female {
+    filter: brightness(1.1);
+  }
+  
+  .i_male:hover ~ .male {
+    filter: brightness(1.1);
+  }
+  
+  .i_female:checked ~ .female {
+    border: solid #690735;
+    color: #fcf6f9;
+    background-color: #690735;
+  }
+  
+  .i_male:checked ~ .male {
+    border: solid #07194b;
+    color: #2429c9;
+    background-color: #07194b;
+    color: white;
+  }
