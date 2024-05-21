@@ -4,7 +4,6 @@ import { tokens } from "../../../theme";
 // Components
 import Header from "../../../components/Header";
 import { TableUser } from "./TableUser";
-import LoadingComponent from "../../../components/LoadingComponent";
 // API Calls
 import { getAllPatients } from "../../../services/userService";
 

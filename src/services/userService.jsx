@@ -17,7 +17,7 @@ export const getAllUsers = async () => {
         postalCode: item.postalCode,
         address: item.address.replace(":::", "\n"),
         role: item.role,
-        permission: item.permission,  
+        permission: item.permission ? "Permit" : "Block",  
       };
       tmp_data.push(tmp_item);
     });
@@ -42,7 +42,7 @@ export const getAllDoctors = async () => {
         postalCode: item.postalCode,
         address: item.address.replace(":::", "\n"),
         role: item.role,
-        permission: item.permission,  
+        permission: item.permission ? "Permit" : "Block",
         control: ''
       };
       tmp_data.push(tmp_item);
@@ -69,7 +69,7 @@ export const getAllPatients = async () => {
       postalCode: item.postalCode,
       address: item.address.replace(":::", "\n"),
       role: item.role,
-      permission: item.permission,  
+      permission: item.permission ? "Permit" : "Block",  
       control: ''
     };
     tmp_data.push(tmp_item);
@@ -96,7 +96,7 @@ export const getAllNewUsers = async () => {
       postalCode: item.postalCode,
       address: item.address.replace(":::", "\n"),
       role: item.role,
-      permission: item.permission,  
+      permission: item.permission ? "Permit" : "Block",  
       control: ''
     };
     tmp_data.push(tmp_item);

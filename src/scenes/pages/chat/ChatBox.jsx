@@ -35,30 +35,23 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, userId }) => {
         setEditedContent(e.target.value);
     };
 
+    const isSentMessage = (message) => message.fromUserId === userId;
+
     return (
         <List>
             {messages.map((message) => (
                 <ListItem alignItems="flex-start" key={message.id} onClick={() => setSelectedMessage(message.id)}>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <ImageIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    {editMode === message.id ? (
+                    {isSentMessage(message) ? (
                         <>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <ImageIcon />
+                                </Avatar>
+                            </ListItemAvatar>
                             <ListItemText
-                                primary={
-                                    <input
-                                        type="text"
-                                        value={editedContent}
-                                        onChange={handleEditChange}
-                                    />
-                                }
-                                secondary={
-                                    <div>
-                                        <DoneIcon onClick={handleSaveEdit} />
-                                    </div>
-                                }
+                                primary={message.userName}
+                                secondary={message.content}
+                                style={{ textAlign: 'left' }}
                             />
                         </>
                     ) : (
@@ -66,14 +59,20 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, userId }) => {
                             <ListItemText
                                 primary={message.userName}
                                 secondary={message.content}
+                                style={{ textAlign: 'right' }}
                             />
-                            {selectedMessage === message.id && message.fromUserId === userId && (
-                                <div>
-                                    <EditIcon onClick={() => handleEditClick(message)} />
-                                    <DeleteIcon onClick={() => handleDeleteClick(message.id)} />
-                                </div>
-                            )}
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <ImageIcon />
+                                </Avatar>
+                            </ListItemAvatar>
                         </>
+                    )}
+                    {selectedMessage === message.id && isSentMessage(message) && (
+                        <div>
+                            <EditIcon onClick={() => handleEditClick(message)} />
+                            <DeleteIcon onClick={() => handleDeleteClick(message.id)} />
+                        </div>
                     )}
                 </ListItem>
             ))}

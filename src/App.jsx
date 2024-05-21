@@ -27,6 +27,7 @@ import ChatRoom from "./scenes/pages/chat/Chatroom";
 //Doctor Pages
 import DoctorDashboard from "./scenes/pages/dashboard/DoctorDashboard"; 
 import DoctorProfile from "./scenes/pages/profile/DoctorProfile";
+import DoctorRelation from "./scenes/pages/relation/DoctorRelation";
 import DoctorSchedule from "./scenes/pages/schedule/DoctorSchedule";
 import DoctorAppointment from "./scenes/pages/appointment/DoctorAppointment";
 import DoctorSeizures from "./scenes/pages/records/DoctorSeizures";
@@ -36,6 +37,7 @@ import DoctorCheckups from "./scenes/pages/records/DoctorCheckups";
 //Patient Pages
 import PatientDashboard from "./scenes/pages/dashboard/PatientDashboard";
 import PatientProfile from "./scenes/pages/profile/PatientProfile";
+import PatientRelation from "./scenes/pages/relation/PatientRelation";
 import PatientSeizures from "./scenes/pages/records/PatientSeizures";
 import PatientMedications from "./scenes/pages/records/PatientMedications";
 import PatientCheckups from "./scenes/pages/records/PatientCheckups";
@@ -65,6 +67,7 @@ function App() {
         <Route element={<DoctorPrivateRoute />}>
           <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
           <Route path="/doctor/profile" element={<DoctorProfile />} />
+          <Route path="/doctor/relation" element={<DoctorRelation />} />
           <Route path="/doctor/seizures" element={<DoctorSeizures />} />
           <Route path="/doctor/medications" element={<DoctorMedications />} />
           <Route path="/doctor/checkups" element={<DoctorCheckups />} />
@@ -74,7 +77,7 @@ function App() {
         </Route>
         <Route element={<PatientPrivateRoute />}>
           <Route path="/patient/dashboard" element={<PatientDashboard />} />
-          <Route path="/patient/doctors" element={<DoctorsProfile />} />
+          <Route path="/patient/relation" element={<PatientRelation />} />
           <Route path="/patient/profile" element={<PatientProfile />} />
           <Route path="/patient/seizures" element={<PatientSeizures />} />
           <Route path="/patient/medications" element={<PatientMedications />} />

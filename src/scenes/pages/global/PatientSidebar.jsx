@@ -9,6 +9,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonPinCircleOutlinedIcon from '@mui/icons-material/PersonPinCircleOutlined';
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import HealingOutlinedIcon from '@mui/icons-material/HealingOutlined';
 import MedicationLiquidOutlinedIcon from '@mui/icons-material/MedicationLiquidOutlined';
 import BloodtypeOutlined from "@mui/icons-material/BloodtypeOutlined";
@@ -147,8 +148,8 @@ const PatientSidebar = () => {
             />
             <Item
               title="Doctors"
-              to="/patient/doctors"
-              icon={<PeopleOutlinedIcon />}
+              to="/patient/relation"
+              icon={<AddTaskOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

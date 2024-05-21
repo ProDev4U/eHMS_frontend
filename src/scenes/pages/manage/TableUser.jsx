@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Dialog, DialogTitle,DialogContent, DialogActions,  DialogContentText, Button, TextField } from "@mui/material";
+import { DataGrid, GridToolbar, GridActionsCellItem } from '@mui/x-data-grid';
+import { Box, Select, MenuItem, Dialog, DialogTitle,DialogContent, DialogActions,  DialogContentText, Button, TextField } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { GridActionsCellItem } from '@mui/x-data-grid';
 import { ToastContainer, toast } from 'react-toastify';
 // Components
 import { TableColumnUser } from "./TableColumnUser";
 // API Calls
 import { updateUserById, deleteUserById } from "../../../services/userService";
+
+const roles = ['Admin', 'Doctor', 'Patient'];
+const permissions = ['Block', 'Permit'];
 
 export const TableUser = ({ data, setData, colors }) => {
     const [selectedItemId, setSelectedItemId] = useState(null);
@@ -85,7 +86,6 @@ export const TableUser = ({ data, setData, colors }) => {
 
     return ( 
         <Box
-            m="40px 0 0 0"
             height="75vh"
             sx={{
             "& .MuiDataGrid-root": {
@@ -155,8 +155,8 @@ export const TableUser = ({ data, setData, colors }) => {
                         label="Full Name"
                         fullWidth
                         value={editedItem.name}
-                        onChange={handleEditChange}
                         className="name-column--cell"
+                        InputProps={{ readOnly: true }}
                     />
                     <TextField
                         margin="dense"
@@ -164,7 +164,8 @@ export const TableUser = ({ data, setData, colors }) => {
                         label="Email"
                         fullWidth
                         value={editedItem.email}
-                        onChange={handleEditChange}
+                        className="name-column--cell"
+                        InputProps={{ readOnly: true }}
                     />
                     <TextField
                         margin="dense"
@@ -172,7 +173,8 @@ export const TableUser = ({ data, setData, colors }) => {
                         label="Gender"
                         fullWidth
                         value={editedItem.gender}
-                        onChange={handleEditChange}
+                        className="name-column--cell"
+                        InputProps={{ readOnly: true }}
                     />
                     <TextField
                         margin="dense"
@@ -180,7 +182,8 @@ export const TableUser = ({ data, setData, colors }) => {
                         label="Age"
                         fullWidth
                         value={editedItem.age}
-                        onChange={handleEditChange}
+                        className="name-column--cell"
+                        InputProps={{ readOnly: true }}
                     />
                     <TextField
                         margin="dense"
@@ -188,7 +191,8 @@ export const TableUser = ({ data, setData, colors }) => {
                         label="Phone Number"
                         fullWidth
                         value={editedItem.phoneNumber}
-                        onChange={handleEditChange}
+                        className="name-column--cell"
+                        InputProps={{ readOnly: true }}
                     />
                     <TextField
                         margin="dense"
@@ -196,7 +200,8 @@ export const TableUser = ({ data, setData, colors }) => {
                         label="Post Code"
                         fullWidth
                         value={editedItem.postalCode}
-                        onChange={handleEditChange}
+                        className="name-column--cell"
+                        InputProps={{ readOnly: true }}
                     />
                     <TextField
                         margin="dense"
@@ -204,24 +209,33 @@ export const TableUser = ({ data, setData, colors }) => {
                         label="Address"
                         fullWidth
                         value={editedItem.address}
-                        onChange={handleEditChange}
+                        className="name-column--cell"
+                        InputProps={{ readOnly: true }}
                     />
-                    <TextField
+                    <Select
                         margin="dense"
                         name="role"
                         label="Role"
                         fullWidth
                         value={editedItem.role}
                         onChange={handleEditChange}
-                    />
-                    <TextField
+                    >
+                        {roles.map(role => (
+                            <MenuItem key={role} value={role}>{role}</MenuItem>
+                        ))}
+                    </Select>
+                    <Select
                         margin="dense"
                         name="permission"
                         label="Permission"
                         fullWidth
                         value={editedItem.permission}
                         onChange={handleEditChange}
-                    />
+                    >
+                        {permissions.map((permission, index) => (
+                            <MenuItem key={permission} value={index}>{permission}</MenuItem>
+                        ))}
+                    </Select>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setIsEditDialog(false)}>Cancel</Button>
@@ -241,7 +255,7 @@ export const TableUser = ({ data, setData, colors }) => {
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    Are you sure you want to delete this item?
+                    Are you sure you want to delete this user?
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>

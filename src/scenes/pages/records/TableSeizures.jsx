@@ -159,7 +159,7 @@ export const TableSeizuresWithActions = ({setSeizureData, userId,seizureData, co
     return (
         <div>
             <Box
-            m="40px 0 0 0"
+            m="10px 0 0 0"
             height="75vh"
             sx={{
                 "& .MuiDataGrid-root": {

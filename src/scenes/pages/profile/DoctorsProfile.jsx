@@ -1,61 +1,35 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import DoctorProfile from "../../../components/DoctorProfile";
+// API Calls
+import { getAllDoctors } from "../../../services/userService";  
 
 const DoctorsProfile = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [doctors, setDoctors] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tmp_data = await getAllDoctors();
+        setDoctors(tmp_data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
   
+    fetchData();
+  }, []);
 
   return (
     <Box m="20px">
       <Header title="Doctor Profile" subtitle="Managing the Doctor Identity" />
       <Box
-        m="40px 0 0 0"
         height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-        }}
       >
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          padding="15px"
-        >
-          <DoctorProfile />
-        </Box>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          padding="15px"
-        >
-          <DoctorProfile />
-        </Box>
+        
       </Box>
     </Box>
   );

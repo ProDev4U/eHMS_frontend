@@ -7,6 +7,7 @@ import { tokens } from "../../../theme";
 import { AuthContext } from "../../../contexts/AuthContext";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonPinCircleOutlinedIcon from '@mui/icons-material/PersonPinCircleOutlined';
+import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import HealingOutlinedIcon from '@mui/icons-material/HealingOutlined';
 import MedicationLiquidOutlinedIcon from '@mui/icons-material/MedicationLiquidOutlined';
 import BloodtypeOutlined from "@mui/icons-material/BloodtypeOutlined";
@@ -142,7 +143,14 @@ const DoctorSidebar = () => {
               icon={<PersonPinCircleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />            
+            />     
+            <Item
+              title="Patients"
+              to="/doctor/relation"
+              icon={<AddTaskOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />        
             <Item
               title="Seizures"
               to="/doctor/seizures"
