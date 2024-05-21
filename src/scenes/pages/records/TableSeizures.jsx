@@ -14,7 +14,6 @@ import { seizureColumns, seizureColumnsWithActions } from "./TableColumns";
 import { addSeizure, editSeizureById, deleteSeizureById } from "../../../services/seizureService";
 
 export const TableSeizures = ({seizureData, colors}) => {
-
     return (
         <Box
         height="70vh"

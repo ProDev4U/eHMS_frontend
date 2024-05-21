@@ -4,11 +4,11 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { Box, MenuItem, FormControl, InputLabel, Select, Button, useTheme } from "@mui/material";
 // Components
 import Header from "../../../components/Header";
-import { TableSeizuresWithActions } from "./TableSeizures";
+import { TableSeizures } from "./TableSeizures";
 import LoadingComponent from "../../../components/LoadingComponent";
 // Call API to fetch seizure data
 import { getSeizuresByPatientId } from "../../../services/seizureService";
-import { getAllPatients } from "../../../services/userService";
+import { getRelationsByDoctorId } from "../../../services/relationService";
 
 const DoctorSeizures = () => {
   const theme = useTheme();
@@ -21,7 +21,7 @@ const DoctorSeizures = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const tmp_data = await getAllPatients();
+        const tmp_data = await getRelationsByDoctorId(user.id);
         setPatients(tmp_data);
         setPatientId(tmp_data?.[0]?.id);
       } catch (error) {
@@ -54,7 +54,7 @@ const DoctorSeizures = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Seizure Records" subtitle="List of seizures for your patient" />
 
-        <Box>
+        <Box width={200}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Patient</InputLabel>
             <Select
@@ -66,7 +66,7 @@ const DoctorSeizures = () => {
             >
               {
                 patients?.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
+                  <MenuItem key={item.patientId} value={item.patientId}>
                     {item.name}
                   </MenuItem>
                 ))
@@ -76,11 +76,7 @@ const DoctorSeizures = () => {
         </Box>
       </Box>
       {/* GRID */}
-      {seizureData.length ? (
-        <TableSeizuresWithActions seizureData={seizureData} colors={colors} userId={patientId} setSeizureData={setSeizureData} />
-      ) : (
-        <LoadingComponent />
-      )}
+      <TableSeizures seizureData={seizureData} colors={colors} userId={patientId} setSeizureData={setSeizureData} />
     </Box>
   );
 };

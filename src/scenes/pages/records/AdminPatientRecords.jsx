@@ -119,7 +119,7 @@ const AdminPatientRecords = () => {
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Patient Records" subtitle="Have a nice Day!" />
-        <Box>
+        <Box width={200}>
           <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Patient</InputLabel>
               <Select

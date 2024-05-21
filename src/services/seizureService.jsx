@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 
 // fetch seizures by patient id
 export const getSeizuresByPatientId = async (patientId) => {
@@ -17,7 +18,11 @@ export const getSeizuresByPatientId = async (patientId) => {
         endtime: item.endtime,
         duration: item.duration,
         possibleTrigger: item.possibleTrigger,
-        attachName: item.attachName,
+        attachName: item.attachName ? (
+            <a href={item.attachName} target="_blank" rel="noopener noreferrer">
+              <DescriptionOutlinedIcon sx={{ color: '#1E8FFD' }} />
+            </a>
+          ) : null,
       };
       tmp_data.push(tmp_item);
     });

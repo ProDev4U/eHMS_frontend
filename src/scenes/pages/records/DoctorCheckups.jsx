@@ -5,10 +5,10 @@ import { Box, MenuItem, FormControl, InputLabel, Select, Button, useTheme } from
 // Components
 import Header from "../../../components/Header";
 import LoadingComponent from "../../../components/LoadingComponent";
-import { TableCheckupsWithActions } from "./TableCheckups";
+import { TableCheckups } from "./TableCheckups";
 // Call API to fetch seizure data
 import { getCheckupsByPatientId } from "../../../services/checkupService";
-import { getAllPatients } from "../../../services/userService";
+import { getRelationsByDoctorId } from "../../../services/relationService";
 
 const DoctorCheckups = () => {
   const theme = useTheme();
@@ -21,7 +21,7 @@ const DoctorCheckups = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const tmp_data = await getAllPatients();
+        const tmp_data = await getRelationsByDoctorId(user.id);
         setPatients(tmp_data);
         setPatientId(tmp_data?.[0]?.id);
       } catch (error) {
@@ -53,7 +53,7 @@ const DoctorCheckups = () => {
     <Box m="20px">
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Header title="Checkup Records" subtitle="List of checkups for your patient" />
-          <Box>
+          <Box width={200}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Patient</InputLabel>
               <Select
@@ -65,7 +65,7 @@ const DoctorCheckups = () => {
               >
                 {
                   patients?.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
+                    <MenuItem key={item.pat} value={item.patientId}>
                       {item.name}
                     </MenuItem>
                   ))
@@ -75,11 +75,7 @@ const DoctorCheckups = () => {
           </Box>
         </Box>
         {/* GRID */}
-        {checkupData.length ? (
-          <TableCheckupsWithActions checkupData={checkupData} colors={colors} setCheckupData={setCheckupData} userId={patientId} />
-        ) : (
-          <LoadingComponent />
-        )}
+        <TableCheckups checkupData={checkupData} colors={colors} setCheckupData={setCheckupData} userId={patientId} />
     </Box>
   );
 };

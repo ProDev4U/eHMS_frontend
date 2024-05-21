@@ -7,7 +7,7 @@ import Header from "../../../components/Header";
 import LoadingComponent from "../../../components/LoadingComponent";
 // Call API to fetch seizure data
 import { getMedicationByPatientId } from "../../../services/medicationService";
-import { TableMedicationsWithActions } from "./TableMedications";
+import { TableMedicationsWithPatientActions } from "./TableMedications";
 
 const PatientMedications = () => {
   const theme = useTheme();
@@ -37,7 +37,7 @@ const PatientMedications = () => {
 
         {/* GRID */}
         {medicationData.length ? (
-          <TableMedicationsWithActions medicationData={medicationData} colors={colors} setMedicationData={setMedicineData} userId={user.id} />
+          <TableMedicationsWithPatientActions medicationData={medicationData} colors={colors} setMedicationData={setMedicineData} userId={user.id} />
         ) : (
           <LoadingComponent />
         )}

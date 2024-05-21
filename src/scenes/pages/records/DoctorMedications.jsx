@@ -4,11 +4,11 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { Box, MenuItem, FormControl, InputLabel, Select, Button, useTheme } from "@mui/material";
 // Components
 import Header from "../../../components/Header";
+import { TableMedicationsWithDoctorActions } from "./TableMedications";
 import LoadingComponent from "../../../components/LoadingComponent";
-import { TableMedicationsWithActions } from "./TableMedications";
 // Call API to fetch seizure data
 import { getMedicationByPatientId } from "../../../services/medicationService";
-import { getAllPatients } from "../../../services/userService";
+import { getRelationsByDoctorId } from "../../../services/relationService";
 
 const DoctorMedications = () => {
   const theme = useTheme();
@@ -21,7 +21,7 @@ const DoctorMedications = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const tmp_data = await getAllPatients();
+        const tmp_data = await getRelationsByDoctorId(user.id);
         setPatients(tmp_data);
         setPatientId(tmp_data?.[0]?.id);
       } catch (error) {
@@ -52,7 +52,7 @@ const DoctorMedications = () => {
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Medication Records" subtitle="List of medications for your patient" />
-        <Box>
+        <Box width={200}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Patient</InputLabel>
             <Select
@@ -64,7 +64,7 @@ const DoctorMedications = () => {
             >
               {
                 patients?.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
+                  <MenuItem key={item.patientId} value={item.patientId}>
                     {item.name}
                   </MenuItem>
                 ))
@@ -75,11 +75,7 @@ const DoctorMedications = () => {
       </Box>
 
       {/* GRID */}
-      {medicationData.length ? (
-        <TableMedicationsWithActions medicationData={medicationData} colors={colors} setMedicationData={setMedicineData} userId={patientId} />
-      ) : (
-        <LoadingComponent />
-      )}
+      <TableMedicationsWithDoctorActions medicationData={medicationData} colors={colors} setMedicationData={setMedicineData} userId={patientId} />
     </Box>
   );
 };

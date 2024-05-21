@@ -56,7 +56,119 @@ export const TableMedications = ({medicationData, colors}) => {
     );
 };
 
-export const TableMedicationsWithActions = ({setMedicationData, userId, medicationData, colors}) => {
+export const TableMedicationsWithPatientActions = ({setMedicationData, userId, medicationData, colors}) => {
+    const [selectedItemId, setSelectedItemId] = useState(null);
+    const [isConfirm, setIsConfirm] = useState(false);
+
+    const showConfirm = (id) => {
+        setSelectedItemId(id);
+        setIsConfirm(true);
+    };
+
+    const AgreeConfirm = () => {
+        setIsConfirm(false);
+        onUpdateUseState(selectedItemId);
+    };
+
+    const onUpdateUseState = async (id) => {
+        try {
+            const res = await editMedicationStateById(id);
+            if(res.status === 200){
+                toast.success("Updated successfully.");
+                // Update state
+                setMedicationData(medicationData.map(item => {
+                    if (item.id === id) {
+                        return { ...item, useState: item.useState + 1 };
+                    }
+                    return item;
+                }));
+            } else {
+                toast.warning("Update Failed.");
+            }
+        } catch (error) {
+                console.error("Server Error:", error);
+                toast.error("Server Error");
+        }
+    }
+
+    return (
+        <Box
+        height="75vh"
+        sx={{
+            "& .MuiDataGrid-root": {
+            border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+            },
+            "& .name-column--cell": {
+            color: colors.greenAccent[300],
+            },
+            "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: colors.blueAccent[700],
+            borderBottom: "none",
+            },
+            "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: colors.primary[400],
+            },
+            "& .MuiDataGrid-footerContainer": {
+            borderTop: "none",
+            backgroundColor: colors.blueAccent[700],
+            },
+            "& .MuiCheckbox-root": {
+            color: `${colors.greenAccent[200]} !important`,
+            },
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+            },
+        }}
+        >
+            <DataGrid
+                rows={medicationData}
+                columns={medicineColumnsWithActions.map((column) =>
+                    column.field === "actions"
+                    ? {
+                        ...column,
+                        getActions: ({ id }) => [
+                            <GridActionsCellItem
+                                icon={<VaccinesOutlinedIcon />}
+                                label="Take a pill"
+                                onClick={() => showConfirm(id)}
+                                color="inherit"
+                            />
+                        ],   
+                    }
+                    : column
+                )}
+                components={{ Toolbar: GridToolbar }}
+            />
+            <Dialog
+                open={isConfirm}
+                onClose={() => setIsConfirm(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                {"Confirm"}
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Are you sure take a pill for this item?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={() => setIsConfirm(false)}>Disagree</Button>
+                <Button onClick={() => AgreeConfirm()} autoFocus>
+                    Agree
+                </Button>
+                </DialogActions>
+            </Dialog>
+            <ToastContainer autoClose={3000} />
+        </Box>
+    );
+};
+
+export const TableMedicationsWithDoctorActions = ({setMedicationData, userId, medicationData, colors}) => {
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [addItem, setAddItem] = useState({});
     const [isAddDialog, setIsAddDialog] = useState(false);
@@ -93,29 +205,6 @@ export const TableMedicationsWithActions = ({setMedicationData, userId, medicati
         }
     };
 
-    
-    const onUpdateUseState = async (id) => {
-        setSelectedItemId(id);
-        try {
-            const res = await editMedicationStateById(id);
-            if(res.status === 200){
-                toast.success("Updated successfully.");
-                // Update state
-                setMedicationData(medicationData.map(item => {
-                    if (item.id === id) {
-                        return { ...item, useState: item.useState + 1 };
-                    }
-                    return item;
-                }));
-            } else {
-                toast.warning("Update Failed.");
-            }
-        } catch (error) {
-                console.error("Server Error:", error);
-                toast.error("Server Error");
-        }
-    }
-
     const handleEditClick = (id) =>  {
         setSelectedItemId(id);
         setEditedItem(medicationData.find((item) => item.id === id));
@@ -128,8 +217,12 @@ export const TableMedicationsWithActions = ({setMedicationData, userId, medicati
     }
 
     const SaveEditDialog = async () => {
-        onSave(selectedItemId, editedItem);
         setIsEditDialog(false);
+        if(editedItem.useState) {
+            toast.warning("You can't edit record of the medication. \nThe patient has already taken the medicine!");
+            return;
+        }
+        onSave(selectedItemId, editedItem);
     };
     
     const onSave = async (id, data) => {
@@ -155,11 +248,16 @@ export const TableMedicationsWithActions = ({setMedicationData, userId, medicati
 
     const handleDeleteClick = (id)  => {
         setSelectedItemId(id);
+        setEditedItem(medicationData.find((item) => item.id === id));
         setIsDeleteConfirm(true);
     };
 
     const AgreeDeleteConfirm  = () => {
         setIsDeleteConfirm(false);
+        if(editedItem.useState) {
+            toast.warning("You can't delete record of the medication. \nThe patient has already taken the medicine!");
+            return;
+        }
         onDelete(selectedItemId)
     };  
 
@@ -231,12 +329,6 @@ export const TableMedicationsWithActions = ({setMedicationData, userId, medicati
                                 icon={<DeleteForeverOutlinedIcon />}
                                 label="Delete"
                                 onClick={() => handleDeleteClick(id)}
-                                color="inherit"
-                            />,
-                            <GridActionsCellItem
-                                icon={<VaccinesOutlinedIcon />}
-                                label="Take a pill"
-                                onClick={() => onUpdateUseState(id)}
                                 color="inherit"
                             />
                         ],   
@@ -373,14 +465,6 @@ export const TableMedicationsWithActions = ({setMedicationData, userId, medicati
                         type="time"
                         fullWidth
                         value={editedItem.time}
-                        onChange={handleEditChange}
-                    />
-                    <TextField
-                        margin="dense"
-                        name="useState"
-                        label="Have U done?"
-                        fullWidth
-                        value={editedItem.useState}
                         onChange={handleEditChange}
                     />
                 </DialogContent>
