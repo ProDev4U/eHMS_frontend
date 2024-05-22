@@ -3,9 +3,7 @@ import { tokens } from "../../../theme";
 import { AuthContext } from "../../../contexts/AuthContext";
 import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
 import {
   Box,
   List,
@@ -158,14 +156,12 @@ const PatientSchedule = () => {
               height="75vh"
               plugins={[
                 dayGridPlugin,
-                timeGridPlugin,
                 interactionPlugin,
-                listPlugin,
               ]}
               headerToolbar={{
                 left: "prev,next today",
                 center: "title",
-                right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+                right: "dayGridMonth",
               }}
               initialView="dayGridMonth"
               editable={true}

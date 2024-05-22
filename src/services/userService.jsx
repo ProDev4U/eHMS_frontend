@@ -25,6 +25,32 @@ export const getAllUsers = async () => {
     return tmp_data;
 };
 
+export const getUserById = async (id) => {
+    let tmp_data = [];
+    const result = await axios.get(
+        `http://localhost:5000/users/${id}`,
+    );
+    console.log("res=>", result.data);
+    result.data?.map((item) => {
+      let tmp_item = {
+        id: item.id,
+        firstName: item.firstName,
+        lastName:item.lastName,
+        email: item.email,
+        gender: item.gender,
+        age: item.age,
+        phoneNumber: item.phoneNumber,
+        postalCode: item.postalCode,
+        address1: item.address.split(":::")[0],
+        address2: item.address.split(":::")[1],
+        note: item.note,
+        avatar: item.avatar,
+      };
+      tmp_data.push(tmp_item);
+    });
+    return tmp_data;
+};
+
 // fetch all doctors
 export const getAllDoctors = async () => {
     let tmp_data = [];

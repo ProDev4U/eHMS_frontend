@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import Avatar from "react-avatar-edit";
 
-const AvatarEditor = ({avatarUrl, setAvatarUrl}) => {
-  const [preview, setPreview] = useState(null);
-  const src = avatarUrl;
+const AvatarEditor = ({avatar, setImgContent}) => {
+  const src = avatar;
 
   const onClose = () => {
-    setPreview(null);
+    setImgContent(null);
   };
 
   const onCrop = (preview) => {
-    setPreview(preview);
+    console.log(preview);   
+    setImgContent(preview);
   };
 
   const onBeforeFileLoad = (elem) => {
@@ -21,11 +21,6 @@ const AvatarEditor = ({avatarUrl, setAvatarUrl}) => {
     }
   };
 
-  const onFileLoad = (file) => {
-    // console.log(file);
-    // setAvatarUrl(URL.createObjectURL(file));
-  };
-
   return (            
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '80px' }}>
       <Avatar
@@ -34,7 +29,6 @@ const AvatarEditor = ({avatarUrl, setAvatarUrl}) => {
         onCrop={onCrop}
         onClose={onClose}
         onBeforeFileLoad={onBeforeFileLoad}
-        onFileLoad={onFileLoad}
         src={src}
       />
       {/* <img src={preview} alt="No file Preview" /> */}
