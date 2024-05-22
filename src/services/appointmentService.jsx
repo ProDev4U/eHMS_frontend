@@ -18,8 +18,16 @@ export const getAllAppointments = async (doctorId) => {
         end_time: item.end_time,
         topic: item.topic,
         notes: item.notes,
-        state: item.state,
       };
+      if(item.state === 0){
+        tmp_item.state = "Pending";
+      } else if(item.state === 1){
+        tmp_item.state = "Declined";  
+      } else if(item.state === 2){
+        tmp_item.state = "Accepted";
+      } else if(item.state === 3){
+        tmp_item.state = "Finished";
+      }
       tmp_data.push(tmp_item);
     });
     
@@ -35,15 +43,24 @@ export const getAppontmentsByPatientId = async (patientId) => {
     result.data?.map((item) => {
       let tmp_item = {
         id: item.id,
-        doctorName: item.doctorName,
-        doctorEmail: item.doctorEmail,
+        doctor_id: item.doctor_id,
+        name: item.doctorName,
+        email: item.doctorEmail,
         date: item.date,
         from_time: item.from_time,
         end_time: item.end_time,
         topic: item.topic,
         notes: item.notes,
-        state: item.state,
       };
+      if(item.state === 0){
+        tmp_item.state = "Pending";
+      } else if(item.state === 1){
+        tmp_item.state = "Declined";  
+      } else if(item.state === 2){
+        tmp_item.state = "Accepted";
+      } else if(item.state === 3){
+        tmp_item.state = "Finished";
+      }
       tmp_data.push(tmp_item);
     });
     
@@ -64,15 +81,23 @@ export const getAppontmentsByDoctorId = async (doctorId) => {
     result.data?.map((item) => {
       let tmp_item = {
         id: item.id,
-        patientName: item.patientName,
-        email: item.email,
+        name: item.patientName,
+        email: item.patientEmail,
         date: item.date,
         from_time: item.from_time,
         end_time: item.end_time,
         topic: item.topic,
         notes: item.notes,
-        state: item.state,
       };
+      if(item.state === 0){
+        tmp_item.state = "Pending";
+      } else if(item.state === 1){
+        tmp_item.state = "Declined";  
+      } else if(item.state === 2){
+        tmp_item.state = "Accepted";
+      } else if(item.state === 3){
+        tmp_item.state = "Finished";
+      }
       tmp_data.push(tmp_item);
     });
     
@@ -87,10 +112,10 @@ export const addAppointment = async (data) => {
     return result;
 };  
 
-export const editAppointmentById = async (id, data) => {
+export const editAppointmentById = async (id, state) => {
     const result = await axios.put(
-        `http://localhost:5000/appointments/${id}`,
-        data,
+        `http://localhost:5000/appointments/${id}/state`,
+        { state }
     );
     return result;
 };

@@ -24,6 +24,7 @@ export const getRelationsByPatientId = async (patientId) => {
         const result = await axios.get(`http://localhost:5000/relations/patient/${patientId}`);
         return result.data.map(item => ({
             id: item.id,
+            doctor_id: item.doctorId,
             name: item.name,
             email: item.email,
             gender: item.gender,

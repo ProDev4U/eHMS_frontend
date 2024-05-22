@@ -4,11 +4,12 @@ import { useTheme, Box } from "@mui/material";
 import { AuthContext } from "../../../contexts/AuthContext";
 // Components
 import Header from "../../../components/Header";
-import { TableAppointmentsWithActions } from "./TableAppointments";
+import { TableAppointmentsWithPatientActions } from "./TableAppointments";
 import LoadingComponent from "../../../components/LoadingComponent";
 // API Calls
 import { getAppontmentsByPatientId } from "../../../services/appointmentService";
 import { getAllDoctors } from "../../../services/userService";
+import { getRelationsByPatientId } from "../../../services/relationService";
 
 const PatientAppointment = () => {
   const theme = useTheme();
@@ -21,7 +22,7 @@ const PatientAppointment = () => {
   useEffect(() => {
     const fetchAllDoctors = async () => {
       try {
-        const tmp_data = await getAllDoctors();
+        const tmp_data = await getRelationsByPatientId(user.id);
         setDoctors(tmp_data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -47,12 +48,8 @@ const PatientAppointment = () => {
         title="Appointment"
         subtitle="List of Contacts for Future Reference"
       />
-    {/* GRID */}
-    {appointmentData.length ? (
-          <TableAppointmentsWithActions appointmentData={appointmentData} colors={colors} setAppointmentData={setAppointmentData} userId={user.id} doctors={doctors} />
-        ) : (
-          <LoadingComponent />
-        )}
+      {/* GRID */}
+      <TableAppointmentsWithPatientActions appointmentData={appointmentData} colors={colors} setAppointmentData={setAppointmentData} userId={user.id} doctors={doctors} />
     </Box>
   );
 };
