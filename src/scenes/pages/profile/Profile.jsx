@@ -1,50 +1,79 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { Box, Grid, useTheme, TextField } from "@mui/material";
-import { tokens } from "../../../theme";
+import { Box, Grid, useTheme, TextField, Button } from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
 import Header from "../../../components/Header";
-import AvatarEditor from "../../../components/AvatarEditor";
-// API Calls
-import { getUserById } from "../../../services/userService";
+import Avatar from "react-avatar-edit";
+import { updateUserInfoById } from "../../../services/userService";
 
 const Profile = () => {
-  const theme = useTheme();
-  const user = useContext(AuthContext);
-  const colors = tokens(theme.palette.mode);
-  const [imgContent, setImgContent] = useState("");
+  const { user } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({
-    firstName: "",
-    lastName: "",
-    gender: "",
-    age: 18,
-    phoneNumber: "",
-    postalCode: "",
-    address1: "",
-    address2: "",
-    rank: "",
-    avatar: "",
-    note: ""
+    firstName: '',
+    lastName: '',
+    gender: '',
+    age: 0,
+    phoneNumber: '',
+    postalCode: '',
+    address: '',
+    address1: '',
+    address2: '',
+    avatar: '',
+    note: '',
+    content: '',
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (user?.id) {
-          console.log(user);
-          const tmp_data = await getUserById(user.id);
-          setUserInfo(tmp_data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    
-    fetchData();
+    if (user) {
+      setUserInfo({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        gender: user.gender || '',
+        age: user.age || 0,
+        phoneNumber: user.phoneNumber || '',
+        postalCode: user.postalCode || '',
+        address: user.address || '',
+        address1: user.address?.split(":::")[0] || '',
+        address2: user.address?.split(":::")[1] || '',
+        avatar: user.avatar || '',
+        note: user.note || '',
+        content: '',
+      });
+    }
   }, []);
+
+  const handleClick = async () => {
+    console.log(userInfo);
+    const res = await updateUserInfoById(user.id, userInfo);
+    if(res.status === 200){
+      toast.success("Saved successfully.");
+    } else {
+      toast.warning("Save Failed.");
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
+    if(name === 'address1' || name === 'address2'){
+      setUserInfo(prevState => ({ ...prevState, address: prevState.address1 + ':::' + prevState.address2, [name]: value }));
+    } else {
+      setUserInfo(prevState => ({ ...prevState, [name]: value }));
+    }
+  };
+
+  const onBeforeFileLoad = (elem) => {
+    if (elem.target.files[0].size > 116800) {
+      alert("File is too big!");
+      elem.target.value = "";
+    }
+  };
+  
+  const onImgClose = () => {
+    setUserInfo(prevState => ({ ...prevState, content: '' }));
+  };
+
+  const onImgCrop = (preview) => {
+    setUserInfo(prevState => ({ ...prevState, content: preview }));
   };
   
   return (
@@ -56,7 +85,7 @@ const Profile = () => {
             <Box
               component="form"
               sx={{
-                '& .MuiTextField-root': { m: 3, width: '40%' },
+                '& .MuiTextField-root': { m: 3, width: '45%' },
               }}
               noValidate
               autoComplete="on"
@@ -144,21 +173,19 @@ const Profile = () => {
                   value={userInfo.address2}
                 />
               </div>
-              <div>
-                <TextField
-                  required
-                  id="rank"
-                  label="Rank"
-                  variant="standard"
-                  name="rank"
-                  onChange={handleChange}
-                  value={userInfo.rank}
-                />
-              </div>
             </Box>
           </Grid>
           <Grid item xs={4}>
-            <AvatarEditor avatar={imgContent} setImgContent={setImgContent} />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '80px' }}>
+              <Avatar
+                width={390}
+                height={250}
+                onCrop={onImgCrop}
+                onClose={onImgClose}
+                src={userInfo.avatar}
+                onBeforeFileLoad={onBeforeFileLoad}
+              />
+            </div>
           </Grid>
           <Grid item xs={12}>
             <Box
@@ -179,9 +206,14 @@ const Profile = () => {
                 value={userInfo.note}
               />
             </Box>
+              
+            <Button variant="contained" color="success" onClick={handleClick} className="pull-right" style={{ marginRight: '60px' }}>
+              Save
+            </Button>
           </Grid>
         </Grid>
       </Box>
+      <ToastContainer autoClose={3000} />
     </Box>
   );
 };

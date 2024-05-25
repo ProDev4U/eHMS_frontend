@@ -38,6 +38,45 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, userId }) => {
     const isSentMessage = (message) => message.fromUserId === userId;
 
     return (
+        // <List>
+        //     {messages.map((message) => (
+        //         <ListItem alignItems="flex-start" key={message.id} onClick={() => setSelectedMessage(message.id)}>
+        //             {isSentMessage(message) ? (
+        //                 <>
+        //                     <ListItemAvatar>
+        //                         <Avatar>
+        //                             <ImageIcon />
+        //                         </Avatar>
+        //                     </ListItemAvatar>
+        //                     <ListItemText
+        //                         primary={message.userName}
+        //                         secondary={message.content}
+        //                         style={{ textAlign: 'left' }}
+        //                     />
+        //                 </>
+        //             ) : (
+        //                 <>
+        //                     <ListItemText
+        //                         primary={message.userName}
+        //                         secondary={message.content}
+        //                         style={{ textAlign: 'right' }}
+        //                     />
+        //                     <ListItemAvatar>
+        //                         <Avatar>
+        //                             <ImageIcon />
+        //                         </Avatar>
+        //                     </ListItemAvatar>
+        //                 </>
+        //             )}
+        //             {selectedMessage === message.id && isSentMessage(message) && (
+        //                 <div>
+        //                     <EditIcon onClick={() => handleEditClick(message)} />
+        //                     <DeleteIcon onClick={() => handleDeleteClick(message.id)} />
+        //                 </div>
+        //             )}
+        //         </ListItem>
+        //     ))}
+        // </List>
         <List>
             {messages.map((message) => (
                 <ListItem alignItems="flex-start" key={message.id} onClick={() => setSelectedMessage(message.id)}>

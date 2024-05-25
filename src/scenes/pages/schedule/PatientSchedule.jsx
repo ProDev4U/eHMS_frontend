@@ -157,6 +157,7 @@ const PatientSchedule = () => {
               plugins={[
                 dayGridPlugin,
                 interactionPlugin,
+                
               ]}
               headerToolbar={{
                 left: "prev,next today",
@@ -166,7 +167,7 @@ const PatientSchedule = () => {
               initialView="dayGridMonth"
               editable={true}
               selectable={true}
-              selectMirror={true}
+              selectMirror={true}      
               dayMaxEvents={true}
               select={handleDateClick}
               eventClick={handleEventClick}

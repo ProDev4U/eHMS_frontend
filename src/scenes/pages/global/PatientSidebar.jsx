@@ -18,7 +18,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import Logo from "../../../assets/logo.png";
-import Nick from "../../../assets/img/avatar/patient (2).png";
+import Nick from "../../../assets/img/avatar/defualt_patient.png";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -118,7 +118,7 @@ const PatientSidebar = () => {
                   {user.firstName} {user.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Software Engineer
+                  Patient
                 </Typography>
               </Box>
             </Box>

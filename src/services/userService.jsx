@@ -153,6 +153,15 @@ export const updateUserById = async (id, data) => {
     return result;
 };
 
+// update user by id
+export const updateUserInfoById = async (id, data) => {
+  const result = await axios.put(
+      `http://localhost:5000/users/info/${id}`,
+      data,
+  );
+  return result;
+};
+
 // delete user by id
 export const deleteUserById = async (id) => {
     const result = await axios.delete(
