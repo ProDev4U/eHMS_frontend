@@ -4,6 +4,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Dialog, DialogTitle,DialogContent, DialogActions,  DialogContentText, Button, TextField } from "@mui/material";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { ToastContainer, toast } from 'react-toastify';
@@ -180,6 +181,10 @@ export const TableSeizuresWithActions = ({setSeizureData, userId,seizureData, co
         }
     }
 
+    const handleDownloadClick = (id) => {
+       
+    };
+
     return (
         <div>
             <Box
@@ -224,6 +229,13 @@ export const TableSeizuresWithActions = ({setSeizureData, userId,seizureData, co
                     ? {
                         ...column,
                         getActions: ({ id }) => [
+                            <GridActionsCellItem
+                                icon={<FileDownloadOutlinedIcon />}
+                                label="Download"
+                                className="textPrimary"
+                                onClick={() => handleDownloadClick(id)}
+                                color="inherit"
+                            />,
                             <GridActionsCellItem
                                 icon={<EditOutlinedIcon />}
                                 label="Edit"

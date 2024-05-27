@@ -182,7 +182,7 @@ const Profile = () => {
                 height={250}
                 onCrop={onImgCrop}
                 onClose={onImgClose}
-                src={userInfo.avatar}
+                // src={`../../../assets/img/avatar/${user.avatar}`}
                 onBeforeFileLoad={onBeforeFileLoad}
               />
             </div>
