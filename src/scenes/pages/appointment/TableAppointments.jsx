@@ -416,7 +416,7 @@ export const TableAppointmentsWithDoctorActions = ({ setAppointmentData, appoint
                                     />,
                                     <GridActionsCellItem
                                         icon={<AlarmOnOutlinedIcon />}
-                                        label="Decline"
+                                        label="Finish"
                                         onClick={() => handleFinishClick(id)}
                                         color="inherit"
                                     />,

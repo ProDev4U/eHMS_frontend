@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import { tokens } from "../../../theme";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
 import {
   Box,
   List,
@@ -12,24 +13,25 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { tokens } from "../../../theme";
 import { toast, ToastContainer } from "react-toastify";
 // Components
 import Header from "../../../components/Header";
 // API Calls
-import { getScheduleByUserId, addSchedule, editScheduleById, deleteScheduleById } from "../../../services/scheduleService";
+import { getScheduleByUserId, addSchedule,  deleteScheduleById } from "../../../services/scheduleService";
 
 const PatientSchedule = () => {
+  const { user } = useContext(AuthContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { user } = useContext(AuthContext);
-
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [initialEvents, setInitialEvents] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const tmp_data = await getScheduleByUserId(user.id);
-        setCurrentEvents(tmp_data);
+        setInitialEvents(tmp_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -39,25 +41,17 @@ const PatientSchedule = () => {
     console.log(currentEvents);
   }, []);
 
-  const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
-
-    if (title) {
-      // add new schedule
+  const handleDateClick = async (selected) => {
+    try {
       const data = {
         user_id: user.id,
-        title: title,
-        date: selected.startStr,
+        title: selected.event.title,
+        start: selected.startStr,
+        end: selected.endStr,
+        allDay: selected.allDay,
       }
-      handleAddSchedule(data);
-    };
-  }
-
-  const handleAddSchedule = async (data) => {
-    try {
       const res = await addSchedule(data);
       if (res.status === 201) {
-        toast.success("Created successfully.");
         // Add new in scheduleData
         let newScheduleData = [...currentEvents];
         newScheduleData.push({...data, id: res.data.scheduleId});
@@ -65,14 +59,11 @@ const PatientSchedule = () => {
         
         const calendarApi = data?.selected.view.calendar;
         calendarApi.unselect();
-
+        
         calendarApi.addEvent({
-          id: res.data.scheduleId,
-          title: data?.title,
-          start: data?.selected.startStr,
-          end: data?.selected.endStr,
-          allDay: data?.selected.allDay,
+          ...data, id: res.data.scheduleId,
         });
+        toast.success("Created successfully.");
       } else {
         toast.warning("Create Failed.");
       }
@@ -80,104 +71,114 @@ const PatientSchedule = () => {
       console.error("Server Error:", error);
       toast.error("Server Error");
     }
+    const title = prompt("Please enter a new title for your event");
+    const calendarApi = selected.view.calendar;
+    calendarApi.unselect();
+
+    if (title) {
+      calendarApi.addEvent({
+        id: `${selected.dateStr}-${title}`,
+        title,
+        start: selected.startStr,
+        end: selected.endStr,
+        allDay: selected.allDay,
+      });
+    }
   };
 
-  const handleEventClick = (selected) => {
+  const handleEventClick = async (selected) => {
     if (
       window.confirm(
         `Are you sure you want to delete the event '${selected.event.title}'`
       )
     ) {
-      const deleteSchedule = async () => {
-        try{
-          const res = await deleteScheduleById(selected.event.id);
-          if (res.status === 200) {
-            toast.success("Deleted successfully.");
-            // Remove from scheduleData
-            let newScheduleData = [...currentEvents];
-            newScheduleData = newScheduleData.filter((item) => item.id !== selected.event.id);
-            setCurrentEvents(newScheduleData);
-            selected.event.remove();
-          } else {
-            toast.warning("Delete Failed.");
-          }
-        } catch {
-          toast.error("Server Error");  
+      try{
+        const res = await deleteScheduleById(selected.event.id);
+        if (res.status === 200) {
+          // Remove from scheduleData
+          setCurrentEvents(currentEvents.filter((item) => item.id !== selected.event.id));
+          selected.event.remove();
+          toast.success("Deleted successfully.");
+        } else {
+          toast.warning("Delete Failed.");
         }
+      } catch {
+        toast.error("Server Error");  
       }
-
-      deleteSchedule();
+      selected.event.remove();
     }
   };
 
   return (
-      <Box m="20px">
-        <Header title="My Schedule" subtitle="Record my schedule." />
+    <Box m="20px">
+      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
 
-        <Box display="flex" justifyContent="space-between">
-          {/* CALENDAR SIDEBAR */}
-          <Box
-            flex="1 1 20%"
-            backgroundColor={colors.primary[400]}
-            p="15px"
-            borderRadius="4px"
-          >
-            <Typography variant="h5">Events</Typography>
-            <List>
-              {currentEvents.map((event) => (
-                <ListItem
-                  key={event.id}
-                  sx={{
-                    backgroundColor: colors.greenAccent[500],
-                    margin: "10px 0",
-                    borderRadius: "2px",
-                  }}
-                >
-                  <ListItemText
-                    primary={event.title}
-                    secondary={
-                      <Typography>
-                        {formatDate(event.start, {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-
-          {/* CALENDAR */}
-          <Box flex="1 1 100%" ml="15px">
-            <FullCalendar
-              height="75vh"
-              plugins={[
-                dayGridPlugin,
-                interactionPlugin,
-                
-              ]}
-              headerToolbar={{
-                left: "prev,next today",
-                center: "title",
-                right: "dayGridMonth",
+      <Box display="flex" justifyContent="space-between">
+        {/* CALENDAR SIDEBAR */}
+        <Box
+          flex="1 1 20%"
+          backgroundColor={colors.primary[400]}
+          p="15px"
+          borderRadius="4px"
+        >
+          <Typography variant="h5">Events</Typography>
+          <List>
+          {currentEvents.map((event) => (
+            <ListItem
+              key={event.id}
+              sx={{
+                backgroundColor: colors.greenAccent[500],
+                margin: "10px 0",
+                borderRadius: "2px",
+                cursor: "pointer", 
               }}
-              initialView="dayGridMonth"
-              editable={true}
-              selectable={true}
-              selectMirror={true}      
-              dayMaxEvents={true}
-              select={handleDateClick}
-              eventClick={handleEventClick}
-              eventsSet={(events) => setCurrentEvents(events)}
-              initialEvents={currentEvents}
-            />
-          </Box>
+              onClick={() => handleEventClick({ event })}
+            >
+              <ListItemText
+                primary={event.title}
+                secondary={
+                  <Typography>
+                    {formatDate(event.start, {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </Typography>
+                }
+              />
+            </ListItem>
+          ))}
+          </List>
         </Box>
-        <ToastContainer autoClose={3000} />
+
+        {/* CALENDAR */}
+        <Box flex="1 1 100%" ml="15px">
+          <FullCalendar
+            height="75vh"
+            plugins={[
+              dayGridPlugin,
+              timeGridPlugin,
+              interactionPlugin,
+              listPlugin,
+            ]}
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+            }}
+            initialView="dayGridMonth"
+            editable={true}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
+            select={handleDateClick}
+            eventClick={handleEventClick}
+            eventsSet={(events) => {setCurrentEvents(events); console.log(events)}}
+            initialEvents={initialEvents}
+          />
+        </Box>
       </Box>
+    </Box>
   );
 };
 

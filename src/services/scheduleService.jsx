@@ -11,7 +11,7 @@ export const getScheduleByUserId = async (userId) => {
         id: item.id,
         userName: item.userName,
         title: item.title,
-        date: item.date,
+        start: item.start,
       };
       tmp_data.push(tmp_item);
     });
@@ -29,7 +29,10 @@ export const getAllSchedules = async () => {
         id: item.id,
         userName: item.userName,
         title: item.title,
-        date: item.date,
+        start: item.start,
+        end: item.end,
+        allDay: item.allDay,
+        date: item.start.spilt("T")[0],
       };
       tmp_data.push(tmp_item);
     });
