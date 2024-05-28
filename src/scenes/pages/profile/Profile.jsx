@@ -8,6 +8,7 @@ import { updateUserInfoById } from "../../../services/userService";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
+  const avatarSrc = user.avatar? '/img/avatar/'+user.avatar : '';
   const [userInfo, setUserInfo] = useState({
     firstName: '',
     lastName: '',
@@ -62,7 +63,7 @@ const Profile = () => {
   };
 
   const onBeforeFileLoad = (elem) => {
-    if (elem.target.files[0].size > 116800) {
+    if (elem.target.files[0].size > 126800) {
       alert("File is too big!");
       elem.target.value = "";
     }
@@ -182,7 +183,7 @@ const Profile = () => {
                 height={250}
                 onCrop={onImgCrop}
                 onClose={onImgClose}
-                // src={userInfo.avatar}
+                src={avatarSrc}
                 onBeforeFileLoad={onBeforeFileLoad}
               />
             </div>

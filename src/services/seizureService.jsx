@@ -18,11 +18,7 @@ export const getSeizuresByPatientId = async (patientId) => {
         endtime: item.endtime,
         duration: item.duration,
         possibleTrigger: item.possibleTrigger,
-        attachName: item.attachName ? (
-            <a href={item.attachName} target="_blank" rel="noopener noreferrer">
-              <DescriptionOutlinedIcon sx={{ color: '#1E8FFD' }} />
-            </a>
-          ) : null,
+        attachName: item.attachName
       };
       tmp_data.push(tmp_item);
     });
@@ -32,6 +28,7 @@ export const getSeizuresByPatientId = async (patientId) => {
 
 // create new seizure
 export const addSeizure = async (data) => {
+    console.log(data);
     const result = await axios.post(
         `http://localhost:5000/seizures/`,
         data,
