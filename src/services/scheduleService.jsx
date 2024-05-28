@@ -6,12 +6,14 @@ export const getScheduleByUserId = async (userId) => {
     const result = await axios.get(
         `http://localhost:5000/schedules/user/${userId}`,
     );
-    result.data?.map((item) => {
+    result.data.map((item) => {
       let tmp_item = {
         id: item.id,
-        userName: item.userName,
         title: item.title,
         start: item.start,
+        end: item.end,
+        date: item.start.split("T")[0],
+        allDay: item.allDay,
       };
       tmp_data.push(tmp_item);
     });
@@ -32,7 +34,7 @@ export const getAllSchedules = async () => {
         start: item.start,
         end: item.end,
         allDay: item.allDay,
-        date: item.start.spilt("T")[0],
+        date: item.start.split('T')[0],
       };
       tmp_data.push(tmp_item);
     });

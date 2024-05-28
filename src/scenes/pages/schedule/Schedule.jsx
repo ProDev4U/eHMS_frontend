@@ -20,7 +20,7 @@ import Header from "../../../components/Header";
 // API Calls
 import { getScheduleByUserId, addSchedule,  deleteScheduleById } from "../../../services/scheduleService";
 
-const PatientSchedule = () => {
+const Schedule = () => {
   const { user } = useContext(AuthContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -28,28 +28,38 @@ const PatientSchedule = () => {
   const [initialEvents, setInitialEvents] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const tmp_data = await getScheduleByUserId(user.id);
-        setInitialEvents(tmp_data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-    console.log(currentEvents);
+    getSchedule(user.id);
   }, []);
 
-  const handleDateClick = async (selected) => {
+  const getSchedule = async (userId) => {
     try {
+      const tmp_data = await getScheduleByUserId(userId);
+      console.log(tmp_data);
+      setInitialEvents(tmp_data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  const handleDateClick = async (selected) => {
+    const title = prompt("Please enter a new title for your event");
+
+    if (title) {
       const data = {
         user_id: user.id,
-        title: selected.event.title,
+        title: title,
         start: selected.startStr,
         end: selected.endStr,
         allDay: selected.allDay,
       }
+
+      onAddEvent(data, selected);
+    }
+    
+  };
+
+  const onAddEvent = async (data, selected) => {
+    try {
       const res = await addSchedule(data);
       if (res.status === 201) {
         // Add new in scheduleData
@@ -57,7 +67,7 @@ const PatientSchedule = () => {
         newScheduleData.push({...data, id: res.data.scheduleId});
         setCurrentEvents(newScheduleData);
         
-        const calendarApi = data?.selected.view.calendar;
+        const calendarApi = selected.view.calendar;
         calendarApi.unselect();
         
         calendarApi.addEvent({
@@ -71,20 +81,7 @@ const PatientSchedule = () => {
       console.error("Server Error:", error);
       toast.error("Server Error");
     }
-    const title = prompt("Please enter a new title for your event");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
-
-    if (title) {
-      calendarApi.addEvent({
-        id: `${selected.dateStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
-      });
-    }
-  };
+  }
 
   const handleEventClick = async (selected) => {
     if (
@@ -92,22 +89,25 @@ const PatientSchedule = () => {
         `Are you sure you want to delete the event '${selected.event.title}'`
       )
     ) {
-      try{
-        const res = await deleteScheduleById(selected.event.id);
-        if (res.status === 200) {
-          // Remove from scheduleData
-          setCurrentEvents(currentEvents.filter((item) => item.id !== selected.event.id));
-          selected.event.remove();
-          toast.success("Deleted successfully.");
-        } else {
-          toast.warning("Delete Failed.");
-        }
-      } catch {
-        toast.error("Server Error");  
-      }
-      selected.event.remove();
+      onDeleteEvent(selected);
     }
   };
+
+  const onDeleteEvent = async (selected) => {
+    try{
+      const res = await deleteScheduleById(selected.event.id);
+      if (res.status === 200) {
+        // Remove from scheduleData
+        setCurrentEvents(currentEvents.filter((item) => item.id !== selected.event.id));
+        selected.event.remove();
+        toast.success("Deleted successfully.");
+      } else {
+        toast.warning("Delete Failed.");
+      }
+    } catch {
+      toast.error("Server Error");  
+    }
+  }
 
   return (
     <Box m="20px">
@@ -173,8 +173,33 @@ const PatientSchedule = () => {
             dayMaxEvents={true}
             select={handleDateClick}
             eventClick={handleEventClick}
-            eventsSet={(events) => {setCurrentEvents(events); console.log(events)}}
-            initialEvents={initialEvents}
+            eventsSet={(events) => {setCurrentEvents(events);}}
+            initialEvents={[
+              {
+                  "id": 31,
+                  "title": "w",
+                  "start": "2024-04-28",
+                  "end": "2024-05-12",
+                  "date": "2024-04-28",
+                  "allDay": 1
+              },
+              {
+                  "id": 32,
+                  "title": "s",
+                  "start": "2024-05-05",
+                  "end": "2024-05-12",
+                  "date": "2024-05-05",
+                  "allDay": 1
+              },
+              {
+                  "id": 33,
+                  "title": "sdfsdf",
+                  "start": "2024-05-24",
+                  "end": "2024-05-12",
+                  "date": "2024-05-24",
+                  "allDay": 1
+              },
+          ]}
           />
         </Box>
       </Box>
@@ -182,4 +207,4 @@ const PatientSchedule = () => {
   );
 };
 
-export default PatientSchedule;
+export default Schedule;
