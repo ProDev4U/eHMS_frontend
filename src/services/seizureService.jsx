@@ -28,6 +28,7 @@ export const getSeizuresByPatientId = async (patientId) => {
 
 // create new seizure
 export const addSeizure = async (data) => {
+    console.log(data);
     const result = await axios.post(
         `http://localhost:5000/seizures/`,
         data,

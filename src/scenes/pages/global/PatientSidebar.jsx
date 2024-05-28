@@ -43,6 +43,7 @@ const PatientSidebar = () => {
   const theme = useTheme();
   const { user } = useContext(AuthContext);
   const colors = tokens(theme.palette.mode);
+  const avatarSrc = user.avatar ? '/img/avatar/'+user.avatar : Nick;
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
@@ -104,7 +105,7 @@ const PatientSidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={Nick}
+                  src={avatarSrc}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>

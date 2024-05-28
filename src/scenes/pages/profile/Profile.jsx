@@ -62,7 +62,7 @@ const Profile = () => {
   };
 
   const onBeforeFileLoad = (elem) => {
-    if (elem.target.files[0].size > 116800) {
+    if (elem.target.files[0].size > 126800) {
       alert("File is too big!");
       elem.target.value = "";
     }
@@ -182,7 +182,7 @@ const Profile = () => {
                 height={250}
                 onCrop={onImgCrop}
                 onClose={onImgClose}
-                // src={`../../../assets/img/avatar/${user.avatar}`}
+                src={'/img/avatar/' + user.avatar}
                 onBeforeFileLoad={onBeforeFileLoad}
               />
             </div>
