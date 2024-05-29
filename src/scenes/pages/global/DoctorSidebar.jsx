@@ -116,7 +116,7 @@ const DoctorSidebar = () => {
                   {user.firstName} {user.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Senior Doctor
+                  Doctor
                 </Typography>
               </Box>
             </Box>

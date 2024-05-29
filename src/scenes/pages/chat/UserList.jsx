@@ -47,7 +47,7 @@ function a11yProps(index) {
   };
 }
 
-const UserList = ({ users, contactedUsers, chatUserId, setChatUserId }) => {
+const UserList = ({ users, contactedUsers, chatUserId, setChatUserId, colors }) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -64,7 +64,7 @@ const UserList = ({ users, contactedUsers, chatUserId, setChatUserId }) => {
   };
 
   return (
-    <Box sx={{ bgcolor: 'background.paper' }}>
+    <Box  backgroundColor={colors.primary[400]}>
       <AppBar position="static">
         <Tabs
           value={value}
@@ -84,28 +84,36 @@ const UserList = ({ users, contactedUsers, chatUserId, setChatUserId }) => {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-            {users && users?.map((user) => (
-              <ListItem key={user.id} onClick={() => handleListItemClick(user.id)}>
-                <ListItemAvatar>
-                  <Avatar src="/broken-image.jpg" />
-                </ListItemAvatar>
-                <ListItemText primary={user.name} secondary={user.email} />
-              </ListItem>
-            ))}
-          </List>
+          <Box sx={{ height: '70vh', overflow: 'auto' }}>
+            <List sx={{ width: '100%', maxWidth: 360 }}>
+              {users && users.map((user) => (
+                <ListItem key={user.id} onClick={() => handleListItemClick(user.id)}>
+                  <ListItemAvatar>
+                    {user.avatar ? (
+                      <Avatar src={`/img/avatar/${user.avatar}`} />
+                    ) : (
+                      <Avatar />
+                    )}
+                  </ListItemAvatar>
+                  <ListItemText primary={user.name} secondary={user.email} />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-            {contactedUsers && contactedUsers?.map((contactedUser) => (
-              <ListItem key={contactedUser.id} onClick={() => handleListItemClick(contactedUser.id)}>
-                <ListItemAvatar>
-                  <Avatar src="/broken-image.jpg" />
-                </ListItemAvatar>
-                <ListItemText primary={`${contactedUser.firstName} ${contactedUser.lastName}`} secondary={contactedUser.email} />
-              </ListItem>
-            ))}
-          </List>
+          <Box sx={{ height: '70vh', overflow: 'auto' }}>
+            <List sx={{ width: '100%', maxWidth: 360 }}>
+              {contactedUsers && contactedUsers?.map((contactedUser) => (
+                <ListItem key={contactedUser.id} onClick={() => handleListItemClick(contactedUser.id)}>
+                  <ListItemAvatar>
+                    <Avatar src={contactedUser.avatar ? `/img/avatar/${contactedUser.avatar}` : '/img/avatar/default.png'} />
+                  </ListItemAvatar>
+                  <ListItemText primary={`${contactedUser.firstName} ${contactedUser.lastName}`} secondary={contactedUser.email} />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
         </TabPanel>
       </SwipeableViews>
     </Box>

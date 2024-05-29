@@ -110,13 +110,13 @@ const ChatRoom = () => {
   return (
     <Box m="20px">
       <Header title="ChatRoom" subtitle="send message to your doctor" />
-      <Box height="75vh" sx={{ flexGrow: 1 }}>
+      <Box height="75vh" borderRadius="4px" sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <UserList users={users} contactedUsers={contactedUsers} chatUserId={chatUserId} setChatUserId={setChatUserId} />
+            <UserList users={users} contactedUsers={contactedUsers} chatUserId={chatUserId} setChatUserId={setChatUserId} colors={colors} />
           </Grid>
           <Grid item xs={9}>
-            <ChatBox messages={messages} editMessageById={editMessageById} deleteMessageById={deleteMessageById} userId={user.id} socket={socket} />
+            <ChatBox messages={messages} editMessageById={editMessageById} deleteMessageById={deleteMessageById} userId={user.id} socket={socket} colors={colors} />
             <Stack direction="row" spacing={2}>
               <TextField
                 label="Type your message"

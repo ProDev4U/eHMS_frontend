@@ -120,6 +120,7 @@ const Schedule = () => {
           backgroundColor={colors.primary[400]}
           p="15px"
           borderRadius="4px"
+          sx={{height: '75vh', overflow: 'auto'}}
         >
           <Typography variant="h5">Events</Typography>
           <List>

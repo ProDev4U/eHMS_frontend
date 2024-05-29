@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Box } from "@mui/material";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -11,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import IconButton from '@mui/material/IconButton';
 
-const ChatBox = ({ messages, editMessageById, deleteMessageById, userId, socket }) => {
+const ChatBox = ({ messages, editMessageById, deleteMessageById, userId, socket, colors }) => {
     const [editMode, setEditMode] = useState(null); // Track which message is in edit mode
     const [editedContent, setEditedContent] = useState(""); // Track edited message content
     const [selectedMessage, setSelectedMessage] = useState(null); // Track selected message
@@ -44,69 +45,51 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, userId, socket 
     const sortedMessages = messages.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     return (
-        <List>
-            {sortedMessages.map((message) => (
-                <ListItem
-                    alignItems="flex-start"
-                    key={message.id}
-                    onClick={() => setSelectedMessage(message.id)}
-                >
+        <Box borderRadius="4px" backgroundColor={colors.primary[400]} sx={{ height: '69vh', overflow: 'auto', marginBottom: '25px' }}>
+            <List>
+                {messages.map((message) => (
+                <ListItem alignItems="flex-start" key={message.id} onClick={() => setSelectedMessage(message.id)}>
                     {isSentMessage(message) ? (
-                        <>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <ImageIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            {editMode === message.id ? (
-                                <TextField
-                                    value={editedContent}
-                                    onChange={handleEditChange}
-                                    fullWidth
-                                />
-                            ) : (
-                                <ListItemText
-                                    primary={message.userName}
-                                    secondary={message.content}
-                                    style={{ textAlign: 'left' }}
-                                />
-                            )}
-                        </>
+                    <>
+                        <ListItemAvatar>
+                        {message.avatar ? (
+                            <Avatar src={`/img/avatar/${message.avatar}`} />
+                        ) : (
+                            <Avatar />
+                        )}
+                        </ListItemAvatar>
+                        <ListItemText
+                        primary={message.userName}
+                        secondary={message.content}
+                        style={{ textAlign: 'left' }}
+                        />
+                    </>
                     ) : (
-                        <>
-                            {editMode === message.id ? (
-                                <TextField
-                                    value={editedContent}
-                                    onChange={handleEditChange}
-                                    fullWidth
-                                />
-                            ) : (
-                                <ListItemText
-                                    primary={message.userName}
-                                    secondary={message.content}
-                                    style={{ textAlign: 'right' }}
-                                />
-                            )}
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <ImageIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                        </>
+                    <>
+                        <ListItemText
+                        primary={message.userName}
+                        secondary={message.content}
+                        style={{ textAlign: 'right' }}
+                        />
+                        <ListItemAvatar>
+                        {message.avatar ? (
+                            <Avatar src={`/img/avatar/${message.avatar}`} />
+                        ) : (
+                            <Avatar />
+                        )}
+                        </ListItemAvatar>
+                    </>
                     )}
                     {selectedMessage === message.id && isSentMessage(message) && (
-                        <div>
-                            <IconButton onClick={() => handleEditClick(message)}>
-                                {editMode === message.id ? <DoneIcon onClick={handleSaveEdit} /> : <EditIcon />}
-                            </IconButton>
-                            <IconButton onClick={() => handleDeleteClick(message.id)}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </div>
+                    <div>
+                        <EditIcon onClick={() => handleEditClick(message)} />
+                        <DeleteIcon onClick={() => handleDeleteClick(message.id)} />
+                    </div>
                     )}
                 </ListItem>
-            ))}
-        </List>
+                ))}
+            </List>
+        </Box>
     );
 };
 
