@@ -37,7 +37,7 @@ const ChatRoom = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, []);
+  }, [contactedUsers.length, user.id]);
 
   const fetchContactedUsers = useCallback(async () => {
     try {
@@ -54,6 +54,16 @@ const ChatRoom = () => {
 
     newSocket.on("newMessage", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    newSocket.on("editMessage", (message) => {
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) => (msg.id === message.id ? { ...msg, content: message.content } : msg))
+      );
+    });
+
+    newSocket.on("deleteMessage", (id) => {
+      setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== id));
     });
 
     return () => {
@@ -90,6 +100,7 @@ const ChatRoom = () => {
         date: new Date().toISOString(),
       };
       await sendMessage(data);
+      socket.emit("newMessage", data); // Send new message via socket
       setMessageInput("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -98,17 +109,14 @@ const ChatRoom = () => {
 
   return (
     <Box m="20px">
-      <Header
-        title="ChatRoom"
-        subtitle="send message to your doctor"
-      />
+      <Header title="ChatRoom" subtitle="send message to your doctor" />
       <Box height="75vh" sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
             <UserList users={users} contactedUsers={contactedUsers} chatUserId={chatUserId} setChatUserId={setChatUserId} />
           </Grid>
           <Grid item xs={9}>
-            <ChatBox messages={messages} editMessageById={editMessageById} deleteMessageById={deleteMessageById} userId={user.id} />
+            <ChatBox messages={messages} editMessageById={editMessageById} deleteMessageById={deleteMessageById} userId={user.id} socket={socket} />
             <Stack direction="row" spacing={2}>
               <TextField
                 label="Type your message"
