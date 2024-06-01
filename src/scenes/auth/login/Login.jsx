@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import authService from '../../../services/authService';
@@ -18,7 +17,6 @@ const Login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData({ ...formData, [name]: value });
   };
 
@@ -26,27 +24,27 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await authService.login(formData);
-      if(res){
-        toast.info(res.message, { autoClose: 2000 })
+      if (res) {
+        toast.info(res.message, { autoClose: 2000 });
         setTimeout(() => {
           // Store token in local storage
           localStorage.setItem('token', res.token);
           // Set token in headers for all requests
           setAuthToken(res.token);
           login(res.user); 
-          if(res.user?.role === "Admin")  {
+          if (res.user?.role === "Admin")  {
             navigate('/admin/dashboard');
-          } else if(res.user?.role === "Doctor") {
+          } else if (res.user?.role === "Doctor") {
             navigate('/doctor/dashboard');
           } else {
             navigate('/patient/dashboard')
           }
         }, 2000);
       } else {
-        toast.warning(res.message)
+        toast.warning(res.message);
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
