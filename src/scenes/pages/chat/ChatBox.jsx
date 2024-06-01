@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import IconButton from '@mui/material/IconButton';
 
-const ChatBox = ({ messages, editMessageById, deleteMessageById, userId, socket, colors }) => {
+const ChatBox = ({ messages, editMessageById, deleteMessageById, userId, socket, colors, avatar }) => {
     const [editMode, setEditMode] = useState(null); // Track which message is in edit mode
     const [editedContent, setEditedContent] = useState(""); // Track edited message content
     const [selectedMessage, setSelectedMessage] = useState(null); // Track selected message
@@ -53,7 +53,7 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, userId, socket,
                     <>
                         <ListItemAvatar>
                         {message.avatar ? (
-                            <Avatar src={`/img/avatar/${message.avatar}`} />
+                            <Avatar src={`/img/avatar/${avatar}`} />
                         ) : (
                             <Avatar />
                         )}

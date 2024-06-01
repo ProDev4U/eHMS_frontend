@@ -116,7 +116,7 @@ const ChatRoom = () => {
             <UserList users={users} contactedUsers={contactedUsers} chatUserId={chatUserId} setChatUserId={setChatUserId} colors={colors} />
           </Grid>
           <Grid item xs={9}>
-            <ChatBox messages={messages} editMessageById={editMessageById} deleteMessageById={deleteMessageById} userId={user.id} socket={socket} colors={colors} />
+            <ChatBox messages={messages} editMessageById={editMessageById} deleteMessageById={deleteMessageById} userId={user.id} socket={socket} colors={colors} avatar={user.avatar} />
             <Stack direction="row" spacing={2}>
               <TextField
                 label="Type your message"
