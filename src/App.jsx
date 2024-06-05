@@ -10,6 +10,8 @@ import PatientPrivateRoute from './privateRouts/PatientPrivateRoute'
 //Auth Pages
 import Login from "./scenes/auth/login/Login";
 import Register from "./scenes/auth/register/Register";
+// import ForgotPassword from './scenes/auth/forgotPassword/ForgotPassword';
+// import ResetPassword from './scenes/auth/resetPassword/ResetPassword';
 import Home from "./scenes/auth/home/Home";
 
 //Admin Pages
@@ -29,7 +31,6 @@ import DoctorMedications from "./scenes/pages/records/DoctorMedications";
 import DoctorCheckups from "./scenes/pages/records/DoctorCheckups";
 
 //Patient Pages
-import PatientDashboard from "./scenes/pages/dashboard/PatientDashboard";
 import PatientRelation from "./scenes/pages/relation/PatientRelation";
 import PatientSeizures from "./scenes/pages/records/PatientSeizures";
 import PatientMedications from "./scenes/pages/records/PatientMedications";
@@ -48,6 +49,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        {/* <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} /> */}
         <Route element={<AdminPrivateRoute />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/profile" element={<Profile />} />
@@ -71,7 +74,6 @@ function App() {
           <Route path="/doctor/chat" element={<ChatRoom />} />
         </Route>
         <Route element={<PatientPrivateRoute />}>
-          <Route path="/patient/dashboard" element={<PatientDashboard />} />
           <Route path="/patient/relation" element={<PatientRelation />} />
           <Route path="/patient/profile" element={<Profile />} />
           <Route path="/patient/seizures" element={<PatientSeizures />} />

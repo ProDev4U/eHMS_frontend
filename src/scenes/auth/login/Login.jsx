@@ -37,7 +37,7 @@ const Login = () => {
           } else if (res.user?.role === "Doctor") {
             navigate('/doctor/dashboard');
           } else {
-            navigate('/patient/dashboard')
+            navigate('/patient/relation')
           }
         }, 2000);
       } else {
