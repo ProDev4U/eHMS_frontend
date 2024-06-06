@@ -132,6 +132,10 @@ const Profile = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  inputProps={{
+                    min: 1, // Set your minimum value here
+                    max: 120, // Set your maximum value here
+                  }}
                 />
               </div>
               <div>

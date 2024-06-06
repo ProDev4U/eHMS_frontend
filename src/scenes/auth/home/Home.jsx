@@ -13,10 +13,6 @@ import Footer from "../subhome/Footer";
 
 const Home = () => {
   return (
-    // <div>
-    //   <Link to="/login">Login</Link>
-    //   <Link to="/register">Register</Link>
-    // </div>
     <div className="home-section">
       <Navbar />
       <Hero />

@@ -94,6 +94,7 @@ export const getAllPatients = async () => {
       phoneNumber: item.phoneNumber,
       postalCode: item.postalCode,
       address: item.address.replace(":::", "\n"),
+      avatar: item.avatar ? '/img/avatar/'+item.avatar : '/img/avatar/default.png',
       role: item.role,
       permission: item.permission ? "Permit" : "Block",  
       control: ''
@@ -121,6 +122,7 @@ export const getAllNewUsers = async () => {
       phoneNumber: item.phoneNumber,
       postalCode: item.postalCode,
       address: item.address.replace(":::", "\n"),
+      avatar: item.avatar ? '/img/avatar/'+item.avatar : '/img/avatar/default.png',
       role: item.role,
       permission: item.permission ? "Permit" : "Block",  
       control: ''

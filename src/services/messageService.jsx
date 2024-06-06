@@ -12,9 +12,11 @@ export const getAllMessagesByUserId = async (userId) => {
         toUserId: item.toUserId,
         fromUserId: item.fromUserId,
         content: item.content,
+        state: item.state,
         date: item.date,
         userName: item.userName,
         userEmail: item.email,
+        userAvatar: item.avatar ? '/img/avatar/'+item.avatar : '/img/avatar/default.png',
       };
       tmp_data.push(tmp_item);
     });
@@ -35,8 +37,33 @@ export const getMessagesBetweenUsers = async (userId1, userId2) => {
         fromUserId: item.fromUserId,
         content: item.content,
         date: item.date,
+        state: item.state,
         userName: item.userName,
         userEmail: item.email,
+        userAvatar: item.avatar ? '/img/avatar/'+item.avatar : '/img/avatar/default.png',
+      };
+      tmp_data.push(tmp_item);
+    });
+    
+    return tmp_data;
+};
+
+// fetch unread messages
+export const getUnreadMessages = async (userId) => {
+    let tmp_data = [];
+    const result = await axios.get(
+        `http://localhost:5000/messages/user/${userId}/unread`,
+    );  
+    result.data?.map((item) => {      
+      let tmp_item = {
+        id: item.id,
+        toUserId: item.toUserId,
+        fromUserId: item.fromUserId,
+        content: item.content,
+        date: item.date,
+        userName: item.userName,
+        userEmail: item.email,
+        userAvatar: item.avatar ? '/img/avatar/'+item.avatar : '/img/avatar/default.png',
       };
       tmp_data.push(tmp_item);
     });
