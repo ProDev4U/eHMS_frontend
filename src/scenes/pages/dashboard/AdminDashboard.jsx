@@ -1,27 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Avatar } from "@mui/material";
 import { tokens } from "../../../theme";
-import { mockTransactions } from "../../../data/mockData";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import Header from "../../../components/Header";
+import StatBox from "../../../components/StatBox";
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import HotelOutlinedIcon from '@mui/icons-material/HotelOutlined';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SocialDistanceOutlinedIcon from '@mui/icons-material/SocialDistanceOutlined';
-import TrafficIcon from "@mui/icons-material/Traffic";
-import Header from "../../../components/Header";
-import TextField from "@mui/material/TextField";
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import StatBox from "../../../components/StatBox";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 // API Calls
 import { getDashboardUsersInfo, getUpcomingAppointments } from "../../../services/dashboardService";
 
@@ -38,15 +23,15 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const tmp_data = await getDashboardUsersInfo();
-       setCntAllUsers(tmp_data.cntAllUsers);
-       setCntDoctors(tmp_data.cntDoctors);
-       setPatients(tmp_data.patients);
-       setNewRegisters(tmp_data.newRegisters);
+        setCntAllUsers(tmp_data.cntAllUsers);
+        setCntDoctors(tmp_data.cntDoctors);
+        setPatients(tmp_data.patients);
+        setNewRegisters(tmp_data.newRegisters);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     const fetchUpcomingAppointments = async () => {
       try {
         const tmp_data = await getUpcomingAppointments();
@@ -67,7 +52,7 @@ const AdminDashboard = () => {
         <Header title="Admin Dashboard" subtitle="Have a Nice Day!" />
       </Box>
 
-      {/* GRID */} 
+      {/* GRID */}
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
@@ -103,7 +88,7 @@ const AdminDashboard = () => {
         >
           <StatBox
             title={patients.length}
-            subtitle="All Paitients"
+            subtitle="All Patients"
             progress={patients.length / cntAllUsers}
             increase={`${(patients.length / cntAllUsers * 100).toFixed(1)} %`}
             icon={
@@ -160,9 +145,9 @@ const AdminDashboard = () => {
           overflow="auto"
         >
           <TableContainer component={Paper}>
-            <Table sx={{ width: 1050 }} aria-label="simple table">
+            <Table sx={{ minWidth: 1050 }} aria-label="upcoming appointments table">
               <TableHead>
-                <TableRow>
+                <TableRow sx={{ backgroundColor: colors.primary[400] }}>
                   <TableCell align="left">Doctor</TableCell>
                   <TableCell align="left">Doctor Email</TableCell>
                   <TableCell align="left">Patient</TableCell>
@@ -177,7 +162,7 @@ const AdminDashboard = () => {
                 {appointments.map((appointment) => (
                   <TableRow
                     key={appointment.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ backgroundColor: colors.primary[400] }}
                   >
                     <TableCell align="left">{appointment.doctorName}</TableCell>
                     <TableCell align="left">{appointment.doctorEmail}</TableCell>
@@ -190,9 +175,13 @@ const AdminDashboard = () => {
                   </TableRow>
                 ))}
               </TableBody>
+              <caption style={{ captionSide: "top", color: colors.greenAccent[500], fontWeight: "bold", textAlign: "center", padding: "10px" }}> 
+                Upcoming Appointments
+              </caption>
             </Table>
           </TableContainer>
         </Box>
+
         <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -200,9 +189,9 @@ const AdminDashboard = () => {
           overflow="auto"
         >
           <TableContainer component={Paper}>
-            <Table sx={{ width: 520 }} aria-label="simple table">
+            <Table sx={{ minWidth: 520 }} aria-label="patients table">
               <TableHead>
-                <TableRow>
+                <TableRow sx={{ backgroundColor: colors.primary[400] }}>
                   <TableCell></TableCell>
                   <TableCell align="left">Full Name</TableCell>
                   <TableCell align="left">Email</TableCell>
@@ -213,7 +202,7 @@ const AdminDashboard = () => {
                 {patients.map((patient) => (
                   <TableRow
                     key={patient.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ backgroundColor: colors.primary[400] }}
                   >
                     <TableCell>
                       <Avatar alt={patient.name} src={patient.avatar} />
@@ -224,10 +213,13 @@ const AdminDashboard = () => {
                   </TableRow>
                 ))}
               </TableBody>
+              <caption style={{ captionSide: "top", color: colors.greenAccent[500], fontWeight: "bold", textAlign: "center", padding: "10px" }}> 
+                All Patients
+              </caption>
             </Table>
           </TableContainer>
         </Box>
-        
+
         <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -235,9 +227,9 @@ const AdminDashboard = () => {
           overflow="auto"
         >
           <TableContainer component={Paper}>
-            <Table sx={{ width: 520 }} aria-label="simple table">
+            <Table sx={{ minWidth: 520 }} aria-label="new registrations table">
               <TableHead>
-                <TableRow>
+                <TableRow sx={{ backgroundColor: colors.primary[400] }}>
                   <TableCell></TableCell>
                   <TableCell align="left">Full Name</TableCell>
                   <TableCell align="left">Email</TableCell>
@@ -248,7 +240,7 @@ const AdminDashboard = () => {
                 {newRegisters.map((newRegister) => (
                   <TableRow
                     key={newRegister.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ backgroundColor: colors.primary[400] }}
                   >
                     <TableCell>
                       <Avatar alt={newRegister.name} src={newRegister.avatar} />
@@ -259,6 +251,9 @@ const AdminDashboard = () => {
                   </TableRow>
                 ))}
               </TableBody>
+              <caption style={{ captionSide: "top", color: colors.greenAccent[500], fontWeight: "bold", textAlign: "center", padding: "10px" }}> 
+                New Registrations
+              </caption>
             </Table>
           </TableContainer>
         </Box>

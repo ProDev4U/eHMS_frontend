@@ -150,7 +150,10 @@ const DoctorDashboard = () => {
           overflow="auto"
         >
           <TableContainer component={Paper}>
-            <Table sx={{ width: 1050 }} aria-label="simple table">
+            <Table sx={{ minWidth: 1050, backgroundColor: colors.primary[400] }} aria-label="upcoming appointments table">
+              <caption style={{ captionSide: "top", color: colors.greenAccent[500], fontWeight: "bold", textAlign: "center", padding: "10px" }}>
+                Upcoming Appointments
+              </caption>
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Patient</TableCell>
@@ -161,11 +164,11 @@ const DoctorDashboard = () => {
                   <TableCell align="left">Notes</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {appointments.filter((item) => item.doctorEmail === user.email).map((appointment) => (
+              <TableBody sx={{ backgroundColor: colors.primary[400] }}>
+                {appointments.filter((item) => item.doctorEmail === user.email).map((appointment, index) => (
                   <TableRow
                     key={appointment.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ backgroundColor: index % 2 === 0 ? colors.primary[300] : colors.primary[200] }}
                   >
                     <TableCell align="left">{appointment.patientName}</TableCell>
                     <TableCell align="left">{appointment.patientEmail}</TableCell>
@@ -180,13 +183,16 @@ const DoctorDashboard = () => {
           </TableContainer>
         </Box>
         <Box
-          gridColumn="span 4"          
+          gridColumn="span 4"
           height="60vh"
           backgroundColor={colors.primary[400]}
           overflow="auto"
         >
           <TableContainer component={Paper}>
-            <Table sx={{ width: 520 }} aria-label="simple table">
+            <Table sx={{ width: 520, backgroundColor: colors.primary[400] }} aria-label="patient list table">
+              <caption style={{ captionSide: "top", color: colors.greenAccent[500], fontWeight: "bold", textAlign: "center", padding: "10px" }}>
+                My Patients
+              </caption>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
@@ -195,11 +201,11 @@ const DoctorDashboard = () => {
                   <TableCell align="left">Phone</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {patients.map((patient) => (
+              <TableBody sx={{ backgroundColor: colors.primary[400] }}>
+                {patients.map((patient, index) => (
                   <TableRow
                     key={patient.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: index % 2 === 0 ? colors.primary[400] : colors.primary[200] }}
                   >
                     <TableCell>
                       <Avatar alt={patient.name} src={patient.avatar} />
@@ -213,6 +219,7 @@ const DoctorDashboard = () => {
             </Table>
           </TableContainer>
         </Box>
+
       </Box>
     </Box>
   );
