@@ -104,6 +104,37 @@ export const getAppontmentsByDoctorId = async (doctorId) => {
     return tmp_data;
 };
 
+export const getAppointmentsByUserId = async (userId) => {
+    let tmp_data = [];
+    const result = await axios.get( 
+        `http://localhost:5000/appointments/user/${userId}`,
+    );
+    result.data?.map((item) => {
+      let tmp_item = {
+        id: item.id,
+        name: item.patientName,
+        email: item.patientEmail,
+        date: item.date,
+        from_time: item.from_time,
+        end_time: item.end_time,
+        topic: item.topic,
+        notes: item.notes,
+      };
+      if(item.state === 0){
+        tmp_item.state = "Pending";
+      } else if(item.state === 1){
+        tmp_item.state = "Declined";  
+      } else if(item.state === 2){
+        tmp_item.state = "Accepted";
+      } else if(item.state === 3){
+        tmp_item.state = "Finished";
+      }
+      tmp_data.push(tmp_item);
+    });
+    
+    return tmp_data;
+};
+
 export const addAppointment = async (data) => {
     const result = await axios.post(
         `http://localhost:5000/appointments/`,

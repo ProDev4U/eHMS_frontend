@@ -52,7 +52,7 @@ export const getMessagesBetweenUsers = async (userId1, userId2) => {
 export const getUnreadMessages = async (userId) => {
     let tmp_data = [];
     const result = await axios.get(
-        `http://localhost:5000/messages/user/${userId}/unread`,
+        `http://localhost:5000/messages/unread/user/${userId}`,
     );  
     result.data?.map((item) => {      
       let tmp_item = {
