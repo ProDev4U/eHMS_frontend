@@ -21,6 +21,7 @@ const PatientRelation = () => {
       try {
         const tmp_data = await getRelationsByPatientId(user.id);
         setRelations(tmp_data);
+        console.log("relations => ",tmp_data)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -41,7 +42,7 @@ const PatientRelation = () => {
 
   return (
     <Box m="20px">
-      <Header title="Doctor Profile" subtitle="Managing the Doctor Identity" />
+      <Header title="My Doctors" subtitle="List of contacted doctors. Here you can show their information." />
       <PatientTableRelation relations={relations} setRelations={setRelations} colors={colors} doctors={doctors} userId={user.id} />
     </Box>
   );

@@ -125,18 +125,18 @@ export const TableSeizuresWithActions = ({setSeizureData, userId,seizureData, co
         try {
             const res = await addSeizure(data);
             if(res.status === 201){
-                toast.success("Created successfully.");
+                toast.success("New seizure record write correctly!");
                 // Add new in seizureData
                 let newSeizureData = [...seizureData];
                 newSeizureData.push({...addItem, id: res.data.seizureId});
                 setSeizureData(newSeizureData);
                 setAddItem({});
             } else {
-                toast.warning("Create Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -185,7 +185,7 @@ export const TableSeizuresWithActions = ({setSeizureData, userId,seizureData, co
         try {
             const res = await editSeizureById(id, data);
             if(res.status === 200){
-                toast.success("Saved successfully.");
+                toast.success("Seizure record changed successfully!");
                 // Update editedItem in seizureData
                 setSeizureData(seizureData.map(item => {
                     if (item.id === id) {
@@ -194,11 +194,11 @@ export const TableSeizuresWithActions = ({setSeizureData, userId,seizureData, co
                     return item;
                 }));
             } else {
-                toast.warning("Save Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -216,20 +216,16 @@ export const TableSeizuresWithActions = ({setSeizureData, userId,seizureData, co
         try {
             const res = await deleteSeizureById(id);
             if(res.status === 200){
-                toast.success("Deteled successfully.");
+                toast.success("Seizure record deleted successfully.");
                 setSeizureData(seizureData.filter((item) => item.id !== id));
             } else {
-                toast.warning("Delete Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
               console.error("Server Error:", error);
-              toast.error("Server Error");
+              toast.error("Oop! Network Connection Error.");
         }
     }
-
-    const handleDownloadClick = (id) => {
-       
-    };
 
     return (
         <div>

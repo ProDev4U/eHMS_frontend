@@ -5,7 +5,6 @@ import { Box, useTheme } from "@mui/material";
 // Components
 import Header from "../../../components/Header";
 import { TableSeizuresWithActions } from "./TableSeizures";
-import LoadingComponent from "../../../components/LoadingComponent";
 // Call API to fetch seizure data
 import { getSeizuresByPatientId } from "../../../services/seizureService";
 
@@ -36,11 +35,7 @@ const PatientSeizures = () => {
         />
 
         {/* GRID */}
-        {seizureData.length ? (
-          <TableSeizuresWithActions seizureData={seizureData} colors={colors} setSeizureData={setSeizureData} userId={user.id} />
-        ) : (
-          <LoadingComponent />
-        )}
+        <TableSeizuresWithActions seizureData={seizureData} colors={colors} setSeizureData={setSeizureData} userId={user.id} />
     </Box>
   );
 };

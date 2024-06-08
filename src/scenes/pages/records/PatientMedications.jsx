@@ -4,7 +4,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { Box, useTheme } from "@mui/material";
 // Components
 import Header from "../../../components/Header";
-import LoadingComponent from "../../../components/LoadingComponent";
 // Call API to fetch seizure data
 import { getMedicationByPatientId } from "../../../services/medicationService";
 import { TableMedicationsWithPatientActions } from "./TableMedications";
@@ -36,11 +35,7 @@ const PatientMedications = () => {
         />
 
         {/* GRID */}
-        {medicationData.length ? (
-          <TableMedicationsWithPatientActions medicationData={medicationData} colors={colors} setMedicationData={setMedicineData} userId={user.id} />
-        ) : (
-          <LoadingComponent />
-        )}
+        <TableMedicationsWithPatientActions medicationData={medicationData} colors={colors} setMedicationData={setMedicineData} userId={user.id} />
     </Box>
   );
 };

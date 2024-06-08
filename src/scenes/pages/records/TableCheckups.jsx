@@ -89,7 +89,7 @@ export const TableCheckupsWithActions = ({setCheckupData, userId, checkupData, c
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -126,7 +126,7 @@ export const TableCheckupsWithActions = ({setCheckupData, userId, checkupData, c
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -151,7 +151,7 @@ export const TableCheckupsWithActions = ({setCheckupData, userId, checkupData, c
             }
         } catch (error) {
               console.error("Server Error:", error);
-              toast.error("Server Error");
+              toast.error("Oop! Network Connection Error.");
         }
     }
 

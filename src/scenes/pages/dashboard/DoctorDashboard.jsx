@@ -1,20 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../../theme";
-import { mockTransactions } from "../../../data/mockData";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
-import HotelOutlinedIcon from '@mui/icons-material/HotelOutlined';
 import SocialDistanceOutlinedIcon from '@mui/icons-material/SocialDistanceOutlined';
-import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../../components/Header";
-import TextField from "@mui/material/TextField";
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
 import StatBox from "../../../components/StatBox";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -208,7 +199,7 @@ const DoctorDashboard = () => {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: index % 2 === 0 ? colors.primary[400] : colors.primary[200] }}
                   >
                     <TableCell>
-                      <Avatar alt={patient.name} src={patient.avatar} />
+                      <Avatar alt={patient.name} src={patient.avatar ? `/img/avatar/${patient.avatar}` : '/img/avatar/default.png'} />
                     </TableCell>
                     <TableCell align="left">{patient.name}</TableCell>
                     <TableCell align="left">{patient.email}</TableCell>

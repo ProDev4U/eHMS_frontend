@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext, useAuth } from "../../../contexts/AuthContext";
 import { Box, Grid, useTheme, TextField, Button } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import Header from "../../../components/Header";
@@ -7,7 +7,7 @@ import Avatar from "react-avatar-edit";
 import { updateUserInfoById } from "../../../services/userService";
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, login } = useContext(AuthContext);
   const avatarSrc = user.avatar? '/img/avatar/'+user.avatar : '';
   const [userInfo, setUserInfo] = useState({
     firstName: '',
@@ -48,6 +48,7 @@ const Profile = () => {
     const res = await updateUserInfoById(user.id, userInfo);
     if(res.status === 200){
       toast.success("Saved successfully.");
+      login(res.data)
     } else {
       toast.warning("Save Failed.");
     }
@@ -63,7 +64,7 @@ const Profile = () => {
   };
 
   const onBeforeFileLoad = (elem) => {
-    if (elem.target.files[0].size > 126800) {
+    if (elem.target.files[0].size > 11680) {
       alert("File is too big!");
       elem.target.value = "";
     }

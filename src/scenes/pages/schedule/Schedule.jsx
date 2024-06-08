@@ -79,7 +79,7 @@ const Schedule = () => {
       }
     } catch (error) {
       console.error("Server Error:", error);
-      toast.error("Server Error");
+      toast.error("Oop! Network Connection Error.");
     }
   }
 
@@ -105,7 +105,7 @@ const Schedule = () => {
         toast.warning("Delete Failed.");
       }
     } catch {
-      toast.error("Server Error");  
+      toast.error("Oop! Network Connection Error.");  
     }
   }
 
@@ -175,32 +175,7 @@ const Schedule = () => {
             select={handleDateClick}
             eventClick={handleEventClick}
             eventsSet={(events) => {setCurrentEvents(events);}}
-            initialEvents={[
-              {
-                  "id": 31,
-                  "title": "w",
-                  "start": "2024-04-28",
-                  "end": "2024-05-12",
-                  "date": "2024-04-28",
-                  "allDay": 1
-              },
-              {
-                  "id": 32,
-                  "title": "s",
-                  "start": "2024-05-05",
-                  "end": "2024-05-12",
-                  "date": "2024-05-05",
-                  "allDay": 1
-              },
-              {
-                  "id": 33,
-                  "title": "sdfsdf",
-                  "start": "2024-05-24",
-                  "end": "2024-05-12",
-                  "date": "2024-05-24",
-                  "allDay": 1
-              },
-          ]}
+            initialEvents={initialEvents}
           />
         </Box>
       </Box>

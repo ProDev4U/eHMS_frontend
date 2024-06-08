@@ -4,7 +4,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { Box, useTheme } from "@mui/material";
 // Components
 import Header from "../../../components/Header";
-import LoadingComponent from "../../../components/LoadingComponent";
 // Call API to fetch seizure data
 import { getCheckupsByPatientId } from "../../../services/checkupService";
 import { TableCheckupsWithActions } from "./TableCheckups";
@@ -36,11 +35,7 @@ const PaitientCheckups = () => {
         />
 
         {/* GRID */}
-        {checkupData.length ? (
-          <TableCheckupsWithActions checkupData={checkupData} colors={colors} userId={user.id} setCheckupData={setCheckupData} />
-        ) : (
-          <LoadingComponent />
-        )}
+        <TableCheckupsWithActions checkupData={checkupData} colors={colors} userId={user.id} setCheckupData={setCheckupData} />
     </Box>
   );
 };

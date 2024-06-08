@@ -34,28 +34,23 @@ export const TableUser = ({ data, setData, colors }) => {
         setIsEditDialog(false);
     };
     
-    const onSave = async (id, data) => {
-        data.firstName = data.name.split(' ')[0];
-        data.lastName = data.name.split(' ')[1];
-        delete data.name;   
-        delete data.control;
+    const onSave = async (id, item) => {
+        let postData = { ...item, firstName: item.name.split(' ')[0], lastName: item.name.split(' ')[1] }
+        delete postData.name;   
+        delete postData.control;
         try {
-            const res = await updateUserById(id, data);
-            if(res.status === 200){
-                toast.success("Saved successfully.");
+            const res = await updateUserById(id, postData);
+            console.log(item)
+            if(res.status === 201){
+                toast.success(res.data.message);
                 // Update editedItem in data
-                setData(data.map(item => {
-                    if (item.id === id) {
-                        return { ...item, ...data }; // Merge edited data into the item
-                    }
-                    return item;
-                }));
+                setData(data.filter((item) => item.id !== id));
             } else {
-                toast.warning("Save Failed.");
+                toast.warning("Sorry. Your Action didn't work.\nTry again.");
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -80,7 +75,7 @@ export const TableUser = ({ data, setData, colors }) => {
             }
         } catch (error) {
               console.error("Server Error:", error);
-              toast.error("Server Error");
+              toast.error("Oop! Network Connection Error.");
         }
     }
 

@@ -3,7 +3,6 @@ import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, TextField, I
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
-import MailIcon from '@mui/icons-material/Mail';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -51,7 +50,7 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, user, socket, c
             try {
                 await updateMessageStatus(message.id, { state: 1 });
                 socket.emit('updateMessageStatus', { id: message.id, state: 1 });
-                toast.success("Message marked as read");
+                // No toast for updating state
             } catch (error) {
                 toast.error("Failed to update message status");
             }
@@ -69,11 +68,8 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, user, socket, c
                     <ListItem 
                         alignItems="flex-start" 
                         key={message.id} 
-                        onClick={() => {
-                            setSelectedMessage(message.id);
-                            handleUnreadClick(message);
-                        }}
                         sx={{ padding: '8px 16px' }}
+                        onClick={() => handleUnreadClick(message)} // Handle unread click
                     >
                         {isSentMessage(message) ? (
                             <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -97,17 +93,18 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, user, socket, c
                                 )}
                                 {selectedMessage === message.id && (
                                     <Box sx={{ marginLeft: '8px' }}>
-                                        <IconButton onClick={() => handleEditClick(message)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton onClick={() => handleDeleteClick(message.id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                        {editMode === message.id && (
+                                        {editMode === message.id ? (
                                             <IconButton onClick={handleSaveEdit}>
                                                 <DoneIcon />
                                             </IconButton>
+                                        ) : (
+                                            <IconButton onClick={() => handleEditClick(message)}>
+                                                <EditIcon />
+                                            </IconButton>
                                         )}
+                                        <IconButton onClick={() => handleDeleteClick(message.id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
                                     </Box>
                                 )}
                             </Box>
@@ -122,7 +119,7 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, user, socket, c
                                     <Avatar src={message.avatar ? `/img/avatar/${message.avatar}` : null} />
                                 </ListItemAvatar>
                                 {message.state === 0 && (
-                                    <IconButton>
+                                    <IconButton onClick={() => handleUnreadClick(message)}>
                                         <PendingOutlinedIcon sx={{ marginLeft: '-20px' }} style={{ color: 'red' }} />
                                     </IconButton>
                                 )}
@@ -130,7 +127,7 @@ const ChatBox = ({ messages, editMessageById, deleteMessageById, user, socket, c
                         )}
                     </ListItem>
                 ))}
-            </List>
+            </List> 
             <ToastContainer autoClose={3000} />
         </Box>
     );

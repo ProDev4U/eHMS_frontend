@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Button, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AlarmOnOutlinedIcon from '@mui/icons-material/AlarmOnOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
@@ -83,18 +82,18 @@ export const TableAppointmentsWithPatientActions = ({ setAppointmentData, userId
         try {
             const res = await addAppointment(data);
             if (res.status === 201) {
-                toast.success("Created successfully.");
+                toast.success("New Appointment created successfully.");
                 // Add new in AppointmentData
                 let newAppointmentData = [...appointmentData];
                 newAppointmentData.push({ ...addItem, id: res.data.appointmentId, state: "Pending", email: doctors.find((item) => item.name === addItem.name)?.email });
                 setAppointmentData(newAppointmentData);
                 setAddItem({});
             } else {
-                toast.warning("Create Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
             console.error("Server Error:", error);
-            toast.error("Server Error");
+            toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -112,14 +111,14 @@ export const TableAppointmentsWithPatientActions = ({ setAppointmentData, userId
         try {
             const res = await deleteAppointmentById(id);
             if (res.status === 200) {
-                toast.success("Deteled successfully.");
+                toast.success("Appointment deteled successfully.");
                 setAppointmentData(appointmentData.filter((item) => item.id !== id));
             } else {
-                toast.warning("Delete Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
             console.error("Server Error:", error);
-            toast.error("Server Error");
+            toast.error("Oop! Network Connection Error.");
         }
     }
 
@@ -336,7 +335,7 @@ export const TableAppointmentsWithDoctorActions = ({ setAppointmentData, appoint
         try {
             const res = await editAppointmentById(id, newState);
             if (res.status === 200) {
-                toast.success("Appointment Accept successfully.");
+                toast.success("Appointment accept successfully.");
                 setAppointmentData(appointmentData.map(item => {
                     if (item.id === id) {
                         let stateStr = 'Pending';
@@ -356,7 +355,7 @@ export const TableAppointmentsWithDoctorActions = ({ setAppointmentData, appoint
             }
         } catch (error) {
             console.error("Server Error:", error);
-            toast.error("Server Error");
+            toast.error("Oop! Network Connection Error.");
         }
     }
 

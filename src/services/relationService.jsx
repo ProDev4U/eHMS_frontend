@@ -66,7 +66,7 @@ export const getRelationsByDoctorId = async (doctorId) => {
 export const createRelation = async (data) => {
     try {
         const result = await axios.post('http://localhost:5000/relations/', data);
-        return result.data;
+        return result;
     } catch (error) {
         console.error('Error creating relation:', error);
         throw error;
@@ -77,7 +77,7 @@ export const createRelation = async (data) => {
 export const updateRelationStateById = async (id, state) => {
     try {
         const result = await axios.put(`http://localhost:5000/relations/${id}/state`, { state });
-        return result.data;
+        return result;
     } catch (error) {
         console.error('Error updating relation state by ID:', error);
         throw error;
@@ -88,7 +88,7 @@ export const updateRelationStateById = async (id, state) => {
 export const deleteRelationById = async (id) => {
     try {
         const result = await axios.delete(`http://localhost:5000/relations/${id}`);
-        return result.data;
+        return result;
     } catch (error) {
         console.error('Error deleting relation by ID:', error);
         throw error;

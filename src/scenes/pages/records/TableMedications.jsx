@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Dialog, DialogTitle,DialogContent, DialogActions,  DialogContentText, Button, Stack, TextField } from "@mui/material";
+import { Dialog, DialogTitle,DialogContent, DialogActions,  DialogContentText, Button, TextField } from "@mui/material";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import VaccinesOutlinedIcon from '@mui/icons-material/VaccinesOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -12,7 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { medicineColumns, medicineColumnsWithActions } from "./TableColumns";
 // API Calls
 import { addMedication, editMedicationById, editMedicationStateById, deleteMedicationById } from "../../../services/medicationService";
-import { create } from "@mui/material/styles/createTransitions";
 
 export const TableMedications = ({medicationData, colors}) => {
     return (
@@ -74,7 +73,7 @@ export const TableMedicationsWithPatientActions = ({setMedicationData, userId, m
         try {
             const res = await editMedicationStateById(id);
             if(res.status === 200){
-                toast.success("Updated successfully.");
+                toast.success("Medication record changed successfully!");
                 // Update state
                 setMedicationData(medicationData.map(item => {
                     if (item.id === id) {
@@ -83,11 +82,11 @@ export const TableMedicationsWithPatientActions = ({setMedicationData, userId, m
                     return item;
                 }));
             } else {
-                toast.warning("Update Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     }
 
@@ -190,18 +189,18 @@ export const TableMedicationsWithDoctorActions = ({setMedicationData, userId, me
         try {
             const res = await addMedication(data);
             if(res.status === 201){
-                toast.success("Created successfully.");
+                toast.success("New medication record created successfully!");
                 // Add new in medicationData
                 let newMedicationData = [...medicationData];
                 newMedicationData.push({...addItem, id: res.data.medicationId});
                 setMedicationData(newMedicationData);
                 setAddItem({});
             } else {
-                toast.warning("Create Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -229,7 +228,7 @@ export const TableMedicationsWithDoctorActions = ({setMedicationData, userId, me
         try {
             const res = await editMedicationById(id, data);
             if(res.status === 200){
-                toast.success("Saved successfully.");
+                toast.success("Medication record changed successfully.");
                 // Update editedItem in medicationData
                 setMedicationData(medicationData.map(item => {
                     if (item.id === id) {
@@ -238,11 +237,11 @@ export const TableMedicationsWithDoctorActions = ({setMedicationData, userId, me
                     return item;
                 }));
             } else {
-                toast.warning("Save Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error("Server Error");
+                toast.error("Oop! Network Connection Error.");
         }
     };
 
@@ -265,14 +264,14 @@ export const TableMedicationsWithDoctorActions = ({setMedicationData, userId, me
         try {
             const res = await deleteMedicationById(id);
             if(res.status === 200){
-                toast.success("Deteled successfully.");
+                toast.success("Medication record deteled successfully.");
                 setMedicationData(medicationData.filter((item) => item.id !== id));
             } else {
-                toast.warning("Delete Failed.");
+                toast.warning("Sorry. Your action didn't work. \nTry again.");
             }
         } catch (error) {
               console.error("Server Error:", error);
-              toast.error("Server Error");
+              toast.error("Oop! Network Connection Error.");
         }
     }
 

@@ -17,7 +17,7 @@ const AdminPatientManage = () => {
       try {
         const tmp_data = await getAllPatients();
         console.log(tmp_data);
-        setData(tmp_data);
+        setData(tmp_data.filter(item => item.permission === 'Permit'));
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { DataGrid, GridToolbar, GridActionsCellItem } from '@mui/x-data-grid';
-import { Box, MenuItem, Dialog, DialogTitle,DialogContent, DialogActions,  DialogContentText, Button, FormControl, InputLabel, Select, TextField } from "@mui/material";
-import HourglassBottomOutlinedIcon from '@mui/icons-material/HourglassBottomOutlined';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import { Box, MenuItem, Dialog, DialogTitle,DialogContent, DialogActions,  DialogContentText, Button, FormControl, InputLabel, Select } from "@mui/material";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -12,7 +10,7 @@ import { TableColumnRelationWithActions } from "./TableColumnRelation";
 // API Calls
 import { createRelation, deleteRelationById, updateRelationStateById } from "../../../services/relationService";
 
-export const PatientTableRelation = ({ relations, setRelatios, colors, doctors, userId }) => {
+export const PatientTableRelation = ({ relations, setRelations, colors, doctors, userId }) => {
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [isAddDialog, setIsAddDialog] = useState(false);
     const [isDeleteConfirm, setIsDeleteConfirm] = useState(false);
@@ -27,25 +25,27 @@ export const PatientTableRelation = ({ relations, setRelatios, colors, doctors, 
     }
   
     const onAddRelation = async (data) => {
+        console.log(relations)
+        setIsAddDialog(false)
         try {
             const res = await createRelation(data);
+            console.log(res.status, res.data)
             if(res.status === 201){
-                toast.success("Created successfully.");
+                toast.success(res.data.message);
                 // Add new in relationData
                 let newRelationData = [...relations];
                 let tmp_data = doctors.find((item) => item.id === addItem.doctorId);
                 tmp_data.id = res.data.relationId;
-                tmp_data.name = tmp_data.firstName + " " + tmp_data.lastName;
-
-                newRelationData.push({tmp_data});
-                setRelatios(newRelationData);
+                newRelationData.push({...tmp_data, id: res.data.relationId, state: 'Pending'});
+                
+                setRelations(newRelationData);
                 setAddItem({});
             } else {
-                toast.warning("Create Failed.");
+                toast.warning(res.data.message);
             }
         } catch (error) {
                 console.error("Server Error:", error);
-                toast.error('Relation already exists.');
+                toast.error('Oop! Network Connection Error.');
         }
     };
 
@@ -63,14 +63,14 @@ export const PatientTableRelation = ({ relations, setRelatios, colors, doctors, 
         try {
             const res = await deleteRelationById(id);
             if(res.status === 200){
-                toast.success("Deteled successfully.");
-                setRelatios(relations.filter((item) => item.id !== id));
+                toast.success(res.data.message);
+                setRelations(relations.filter((item) => item.id !== id));
             } else {
-                toast.warning("Delete Failed.");
+                toast.warning("Your action didn't work. \nTry again.");
             }
         } catch (error) {
               console.error("Server Error:", error);
-              toast.error("Server Error");
+              toast.error("Oop! Network Connection Error.");
         }
     }
 
@@ -189,7 +189,7 @@ export const PatientTableRelation = ({ relations, setRelatios, colors, doctors, 
     );
 };
 
-export const DoctorTableRelation = ({ relations, setRelatios, colors }) => {
+export const DoctorTableRelation = ({ relations, setRelations, colors }) => {
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [isEditConform, setIsEditConform] = useState(false);
     const [isDeleteConfirm, setIsDeleteConfirm] = useState(false);
@@ -207,15 +207,21 @@ export const DoctorTableRelation = ({ relations, setRelatios, colors }) => {
     const onEdit = async (id) => {
         try {
             const res = await updateRelationStateById(id);
-            if(res.status === 200){
-                toast.success("Accepted relation successfully.");
-                setRelatios(relations.filter((item) => item.id !== id));
+            console.log(res)
+            if(res.status === 201){
+                toast.success(res.data.message);
+                setRelations(relations.map(item => {
+                    if (item.id === id) {
+                        return { ...item, state: 'Accept' }; // Merge edited data into the item
+                    }
+                    return item;
+                }));
             } else {
-                toast.warning("Accepted relation Failed.");
+                toast.warning("Sorry. Your action didn't work.\nTry again.");
             }
         } catch (error) {
               console.error("Server Error:", error);
-              toast.error("Server Error");
+              toast.error("Oop! Network Connection Error.");
         }
     }
 
@@ -234,13 +240,13 @@ export const DoctorTableRelation = ({ relations, setRelatios, colors }) => {
             const res = await deleteRelationById(id);
             if(res.status === 200){
                 toast.success("Deteled successfully.");
-                setRelatios(relations.filter((item) => item.id !== id));
+                setRelations(relations.filter((item) => item.id !== id));
             } else {
                 toast.warning("Delete Failed.");
             }
         } catch (error) {
               console.error("Server Error:", error);
-              toast.error("Server Error");
+              toast.error("Oop! Network Connection Error.");
         }
     }
 
