@@ -94,6 +94,13 @@ export const editMessageById = async (id, editedContent) => {
     }
 };
 
+export const updateMessageStatus = async (id) => {
+    const result = await axios.put(
+        `http://localhost:5000/messages/${id}/state`
+    );
+    return result;
+};
+
 // delete message by id
 export const deleteMessageById = async (id) => {
     const result = await axios.delete(

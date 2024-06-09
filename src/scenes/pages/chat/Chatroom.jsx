@@ -12,7 +12,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import UserList from "./UserList";
 import ChatBox from "./ChatBox";
 import { getAllUsers, getContactedUsers } from "../../../services/userService";
-import { getMessagesBetweenUsers, sendMessage, editMessageById, deleteMessageById } from "../../../services/messageService";
+import { getMessagesBetweenUsers, sendMessage, editMessageById, deleteMessageById, updateMessageStatus } from "../../../services/messageService";
 import { io } from "socket.io-client";
 
 const ChatRoom = () => {
@@ -100,7 +100,8 @@ const ChatRoom = () => {
         date: new Date().toISOString(),
       };
       await sendMessage(data);
-      socket.emit("newMessage", data); // Send new message via socket
+      messages.push({...data, userAvatar: user.avatar ? '/img/avatar/'+user.avatar : '/img/avatar/default.png', userName: user.name});
+      socket.emit("newMessage", {...data, userAvatar: user.avatar ? '/img/avatar/'+user.avatar : '/img/avatar/default.png', userName: user.name}); // Send new message via socket
       setMessageInput("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -116,7 +117,7 @@ const ChatRoom = () => {
             <UserList users={users} contactedUsers={contactedUsers} chatUserId={chatUserId} setChatUserId={setChatUserId} colors={colors} />
           </Grid>
           <Grid item xs={9}>
-            <ChatBox messages={messages} editMessageById={editMessageById} deleteMessageById={deleteMessageById} user={user} socket={socket} colors={colors} avatar={user.avatar} />
+            <ChatBox messages={messages} editMessageById={editMessageById} updateMessageStatus={updateMessageStatus} deleteMessageById={deleteMessageById} user={user} socket={socket} colors={colors} avatar={user.avatar} />
             <Stack direction="row" spacing={2}>
               <TextField
                 label="Type your message"

@@ -4,14 +4,14 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function DoctorCard(props) {
   return (
-    <div className="dt-card">
+    <div className="dt-card" style={{margin: '20px'}}>
       <img src={props.img} alt={props.name} className="dt-card-img" />
       <p className="dt-card-name">{props.name}</p>
       <p className="dt-card-title">{props.title}</p>
       <p className="dt-card-stars">
         <FontAwesomeIcon
           icon={faStar}
-          style={{ color: "#F7BB50", paddingRight: "6px" }}
+          style={{ color: "#F7BB50" }}
         />
         {props.stars}
         <span className="dt-card-reviews"> ({props.reviews}+ Reviews)</span>

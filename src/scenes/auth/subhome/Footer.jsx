@@ -13,13 +13,11 @@ function Footer() {
               Health <span className="ft-sign">+</span>
             </p>
             <p className="ft-description">
-              Talk to online doctors and get medical advice, online
-              prescriptions, refills and medical notes within minutes. On-demand
-              healthcare services at your fingertips.
+              Talk to online doctors and get medical advice, checkups  
+              represent seizures, online chat, and with medical service within minutes. 
+              On-demand healthcare services at your fingertips.
             </p>
           </div>
-
-          <SubscribeNewsletter />
         </div>
 
         <div className="ft-list">
@@ -47,7 +45,7 @@ function Footer() {
           <p className="ft-list-title">Legal</p>
           <ul className="ft-list-items">
             <li>
-              <Link to={"/legal"}>General Info</Link>
+              <Link to={"/"}>General Info</Link>
             </li>
             <li>
               <Link to={"/legal"}>Privacy Policy</Link>
@@ -56,10 +54,10 @@ function Footer() {
               <Link to={"/legal"}>Terms of Services</Link>
             </li>
             <li>
-              <Link to={"/legal"}>Consultations</Link>
+              <Link to={"/"}>Consultations</Link>
             </li>
             <li>
-              <Link to={"/legal"}>How it Works</Link>
+              <Link to={"/"}>How it Works</Link>
             </li>
           </ul>
         </div>
@@ -68,33 +66,37 @@ function Footer() {
           <p className="ft-list-title">Talk To Us</p>
           <ul className="ft-list-items">
             <li>
-              <a href="mailto:support@healthplus.com">support@healthplus.com</a>
-            </li>
-            <li>
-              <a href="mailto:appointment@healthplus.com">
-                appointment@healthplus.com
+              <a href="paishaiming995@gmail.com">
+                paishaiming995@gmail.com
               </a>
             </li>
             <li>
-              <a href="tel:+022 5454 5252">+022 5454 5252</a>
+              <a href="johnnysmith9300@gmail.com">
+                johnnysmith9300@gmail.com
+              </a>
             </li>
             <li>
-              <a href="tel:+022 2326 6232">+022 2326 6232</a>
+              <a href="johnnysmith9300@outlook.com">
+                johnnysmith9300@outlook.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+044 9999 9999">+044 9999 9999</a>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="ft-copyright">
-        <p>© 2013-2023 Health+. All rights reserved.</p>
+        <p>© 2023-2024 Health+ All rights reserved</p>
 
         <ul className="ft-social-links">
           <li>
             <a
-              href="https://linkedin.com/in/Alkaison/"
+              href="https://linkedin.com/"
               title="LinkedIn"
               target="_blank"
-              rel="noopener noreferrer"
+              rel=""
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +113,7 @@ function Footer() {
               href="https://facebook.com/"
               title="FaceBook"
               target="_blank"
-              rel="noopener noreferrer"
+              rel=""
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,10 +127,10 @@ function Footer() {
 
           <li>
             <a
-              href="https://x.com/Alkaison/"
+              href="https://x.com/"
               title="Twitter"
               target="_blank"
-              rel="noopener noreferrer"
+              rel=""
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

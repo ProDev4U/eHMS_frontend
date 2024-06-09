@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 
-const UserList = ({ users, chatUserId, setChatUserId, colors }) => {
+const UserList = ({ users, setChatUserId, colors }) => {
   const theme = useTheme();
 
   const handleListItemClick = (userId) => {
@@ -23,11 +23,7 @@ const UserList = ({ users, chatUserId, setChatUserId, colors }) => {
           {users && users.map((user) => (
             <ListItem key={user.id} onClick={() => handleListItemClick(user.id)}>
               <ListItemAvatar>
-                {user.avatar ? (
-                  <Avatar src={`/img/avatar/${user.avatar}`} />
-                ) : (
-                  <Avatar />
-                )}
+                <Avatar src={user.avatar} />
               </ListItemAvatar>
               <ListItemText primary={user.name} secondary={user.email} />
             </ListItem>

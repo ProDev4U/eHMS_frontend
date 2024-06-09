@@ -73,9 +73,9 @@ const Schedule = () => {
         calendarApi.addEvent({
           ...data, id: res.data.scheduleId,
         });
-        toast.success("Created successfully.");
+        toast.success("Schedule created successfully.");
       } else {
-        toast.warning("Create Failed.");
+        toast.warning("Sorry. Your action didn't work. \nTry again.");
       }
     } catch (error) {
       console.error("Server Error:", error);
@@ -99,10 +99,10 @@ const Schedule = () => {
       if (res.status === 200) {
         // Remove from scheduleData
         setCurrentEvents(currentEvents.filter((item) => item.id !== selected.event.id));
+        toast.success(res.data.message);
         selected.event.remove();
-        toast.success("Deleted successfully.");
       } else {
-        toast.warning("Delete Failed.");
+        toast.warning("Sorry. Your action didn't work. \nTry again.");
       }
     } catch {
       toast.error("Oop! Network Connection Error.");  
