@@ -1,5 +1,4 @@
 import React from "react";
-import Doctor from "../../../assets/img/bg/doctor-book-appointment.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleCheck,
@@ -18,7 +17,7 @@ function BookAppointment() {
   return (
     <div className="ba-section">
       <div className="ba-image-content">
-        <img src={Doctor} alt="Doctor Group" className="ba-image1" />
+        <img src={'/img/bg/doctor-book-appointment.png'} alt="Doctor Group" className="ba-image1" />
       </div>
 
       <div className="ba-text-content">

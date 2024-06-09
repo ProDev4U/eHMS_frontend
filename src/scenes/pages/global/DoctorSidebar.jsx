@@ -15,8 +15,6 @@ import BookOnlineOutlined from "@mui/icons-material/BookOnlineOutlined";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import Logo from "../../../assets/logo.png";
-import Nick from "../../../assets/img/avatar/doctor.png";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -39,7 +37,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const DoctorSidebar = () => {
   const theme = useTheme();
   const { user } = useContext(AuthContext);
-  const avatarSrc = user.avatar ? '/img/avatar/'+user.avatar : Nick;
+  const avatarSrc = user.avatar ? '/img/avatar/'+user.avatar : '/img/avatar/default.png';
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
@@ -86,7 +84,7 @@ const DoctorSidebar = () => {
                   alt="logo"
                   width="50px"
                   height="50px"
-                  src={Logo}
+                  src={'/logo192.png'}
                 />
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />

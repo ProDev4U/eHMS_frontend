@@ -1,9 +1,5 @@
 import React from "react";
 import DoctorCard from "./DoctorCard";
-import profile1 from "../../../assets/img/avatar/profile-1.png";
-import profile2 from "../../../assets/img/avatar/profile-2.png";
-import profile3 from "../../../assets/img/avatar/profile-3.png";
-import profile4 from "../../../assets/img/avatar/profile-4.png";
 import "./Doctors.css";
 
 function Doctors() {
@@ -24,28 +20,28 @@ function Doctors() {
 
       <div className="dt-cards-content">
         <DoctorCard
-          img={profile1}
+          img={'/img/avatar/profile-1.png'}
           name="Dr. Kathryn Murphy"
           title="General Surgeons"
           stars="4.9"
           reviews="1800"
         />
         <DoctorCard
-          img={profile2}
+          img={'/img/avatar/profile-2.png'}
           name="Dr. Jacob Jones"
           title="Hematologists"
           stars="4.8"
           reviews="700"
         />
         <DoctorCard
-          img={profile3}
+          img={'/img/avatar/profile-3.png'}
           name="Dr. Jenny Wilson"
           title="Endocrinologists"
           stars="4.7"
           reviews="450"
         />
         <DoctorCard
-          img={profile4}
+          img={'/img/avatar/profile-4.png'}
           name="Dr. Albert Flores"
           title="Hematologists"
           stars="4.8"

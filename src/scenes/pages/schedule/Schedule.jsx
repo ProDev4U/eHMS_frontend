@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { tokens } from "../../../theme";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 // Components
 import Header from "../../../components/Header";
 // API Calls

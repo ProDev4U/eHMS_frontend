@@ -159,7 +159,7 @@ const DoctorDashboard = () => {
                 {appointments.filter((item) => item.doctorEmail === user.email).map((appointment, index) => (
                   <TableRow
                     key={appointment.id}
-                    sx={{ backgroundColor: index % 2 === 0 ? colors.primary[300] : colors.primary[200] }}
+                    sx={{ backgroundColor: index % 2 === 0 ? colors.primary[400] : colors.primary[400] }}
                   >
                     <TableCell align="left">{appointment.patientName}</TableCell>
                     <TableCell align="left">{appointment.patientEmail}</TableCell>

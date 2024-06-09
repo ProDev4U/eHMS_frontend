@@ -1,5 +1,4 @@
 import React from "react";
-import Doctor from "../../../assets/img/bg/doctor-group.png";
 import SolutionStep from "./SolutionStep";
 import "./About.css";
 
@@ -7,7 +6,7 @@ function About() {
   return (
     <div className="about-section" id="about">
       <div className="about-image-content">
-        <img src={Doctor} alt="Doctor Group" className="about-image1" />
+        <img src={'/img/bg/doctor-book-appointment.png'} alt="Doctor Group" className="about-image1" />
       </div>
 
       <div className="about-text-content">
