@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate  } from "react-router-dom";
 import "./Hero.css";
 
+import { getAllUsers, getAllDoctors } from "../../../services/userService";
+
 function Hero() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [goUp, setGoUp] = useState(false);
+  const [cntUsers, setCntUsers] = useState(0);
+  const [cntDoctors, setCntDoctors] = useState(0);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleBookAppointmentClick = () => {
-    navigate("/appointment");
   };
 
   useEffect(() => {
@@ -24,12 +23,42 @@ function Hero() {
         setGoUp(false);
       }
     };
+
+    const fetchUsers = async () => {
+      try {
+        const tmp_data = await getAllUsers();
+        setCntUsers(tmp_data.length);
+      } catch (error) {
+        console.error("Error fetching patients:", error);
+      }
+    };
+
+    const fetchDoctors = async () => {
+      try {
+        const tmp_data = await getAllDoctors();
+        setCntDoctors(tmp_data.length);
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    };
+
+    fetchUsers();
+    fetchDoctors();
+
     window.addEventListener("scroll", onPageScroll);
 
     return () => {
       window.removeEventListener("scroll", onPageScroll);
     };
   }, []);
+
+  const currentYear = new Date().getFullYear();
+  const startYear = 2023; // The year you started site
+
+  const formatCount = (count) => {
+    return count > 10 ? `${(count / 10).toFixed(0)}+` : `${count}`;
+  };
+  const yearsOfExperience = currentYear - startYear;
 
   return (
     <div className="section-container">
@@ -44,26 +73,19 @@ function Hero() {
             refills and medical notes within minutes. On-demand healthcare
             services at your fingertips.
           </p>
-          <button
-            className="text-appointment-btn"
-            type="button"
-            onClick={handleBookAppointmentClick}
-          >
-            <FontAwesomeIcon icon={faCalendarCheck} /> Book Appointment
-          </button>
           <div className="text-stats">
             <div className="text-stats-container">
-              <p>145k+</p>
-              <p>Receive Patients</p>
+              <p>{formatCount(cntUsers)}</p>
+              <p>Subscribers</p>
             </div>
 
             <div className="text-stats-container">
-              <p>50+</p>
+              <p>{formatCount(cntDoctors)}</p>
               <p>Expert Doctors</p>
             </div>
 
             <div className="text-stats-container">
-              <p>10+</p>
+              <p>{yearsOfExperience}+</p>
               <p>Years of Experience</p>
             </div>
           </div>

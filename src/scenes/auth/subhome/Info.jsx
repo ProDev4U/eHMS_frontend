@@ -21,31 +21,20 @@ function Info() {
 
       <div className="info-cards-content">
         <InformationCard
-          title="Emergency Care"
-          description="Our Emergency Care service is designed to be your reliable support
-            in critical situations. Whether it's a sudden illness, injury, or
-            any medical concern that requires immediate attention, our team of
-            dedicated healthcare professionals is available 24/7 to provide
-            prompt and efficient care."
+          title="Seizure Management"
+          description="Our Seizure Management service is dedicated to providing comprehensive care for individuals with seizure disorders. We offer personalized treatment plans tailored to each patient's needs, including medication management, lifestyle adjustments, and ongoing monitoring."
           icon={faTruckMedical}
         />
 
         <InformationCard
-          title="Heart Disease"
-          description="Our team of experienced cardiologists and medical experts use
-            state-of-the-art technology to assess your cardiovascular health and
-            design personalized treatment plans. From comprehensive screenings
-            to advanced interventions, we are committed to helping you maintain
-            a healthy heart and lead a fulfilling life."
+          title="Diagnostic Checkup"
+          description="Our Diagnostic Checkup service utilizes advanced medical technology to accurately diagnose and evaluate seizure disorders. From EEGs (electroencephalograms) to MRI scans, our team of specialists ensures thorough and precise assessments to guide treatment decisions."
           icon={faHeartPulse}
         />
 
         <InformationCard
-          title="Dental Care"
-          description="Smile with confidence as our Dental Care services cater to all your
-            oral health needs. Our skilled dentists provide a wide range of
-            treatments, from routine check-ups and cleanings to cosmetic
-            procedures and restorative treatments."
+          title="Medication Therapy"
+          description="Our Medication Therapy service aims to optimize seizure control and minimize side effects through carefully managed medication regimens. Our neurologists work closely with patients to prescribe the most effective medications and adjust dosages as needed to achieve optimal outcomes."
           icon={faTooth}
         />
       </div>

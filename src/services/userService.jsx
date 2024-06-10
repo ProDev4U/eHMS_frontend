@@ -70,7 +70,8 @@ export const getAllDoctors = async () => {
         address: item.address.replace(":::", "\n"),
         role: item.role,
         permission: item.permission ? "Permit" : "Block",
-        control: ''
+        control: '',
+        avatar: item.avatar ? '/img/avatar/'+item.avatar : '/img/avatar/default.png',
       };
       tmp_data.push(tmp_item);
     });

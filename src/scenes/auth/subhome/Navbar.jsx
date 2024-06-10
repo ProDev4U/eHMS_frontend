@@ -40,8 +40,13 @@ function Navbar() {
           </a>
         </li>
         <li>
-          <a href="#reviews" className="navbar-links">
-            Reviews
+          <a href="#terms-of-service" className="navbar-links">
+            Terms of Service  
+          </a>
+        </li>
+        <li>
+          <a href="#privacy-policy" className="navbar-links">
+            Privacy Policy  
           </a>
         </li>
         <li>
@@ -79,8 +84,13 @@ function Navbar() {
             </a>
           </li>
           <li>
-            <a onClick={openNav} href="#reviews">
-              Reviews
+            <a onClick={openNav} href="#terms-of-service">
+              Terms of Service
+            </a>
+          </li>
+          <li>
+            <a onClick={openNav} href="#privacy-policy">
+              Privacy Policy
             </a>
           </li>
           <li>

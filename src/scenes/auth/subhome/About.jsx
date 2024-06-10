@@ -14,27 +14,24 @@ function About() {
           <span>About Us</span>
         </h3>
         <p className="about-description">
-          Welcome to Health Plus, your trusted partner for accessible and
-          personalized healthcare. Our expert doctors offer online consultations
-          and specialized services, prioritizing your well-being. Join us on
-          this journey towards a healthier you.
+          Welcome to Health Plus, your trusted partner for accessible and personalized healthcare, including specialized services for seizure patients. Our expert doctors offer online consultations and specialized treatments, prioritizing your well-being. Join us on this journey towards managing and overcoming seizures.
         </p>
 
         <h4 className="about-text-title">Your Solutions</h4>
 
         <SolutionStep
-          title="Choose a Specialist"
-          description="Find your perfect specialist and book with ease at Health Plus. Expert doctors prioritize your health, offering tailored care."
+          title="Choose a Seizure Specialist"
+          description="Find your perfect seizure specialist and book with ease at Health Plus. Our expert doctors prioritize your health, offering tailored care specifically for managing and treating seizures."
         />
 
         <SolutionStep
           title="Make a Schedule"
-          description="Choose the date and time that suits you best, and let our dedicated team of medical professionals ensure your well-being with personalized care."
+          description="Choose the date and time that suits you best, and let our dedicated team of seizure specialists ensure your well-being with personalized care designed to effectively manage and control seizures."
         />
 
         <SolutionStep
           title="Get Your Solutions"
-          description="Our experienced doctors and specialists are here to provide expert advice and personalized treatment plans, helping you achieve your best possible health."
+          description="Our experienced seizure specialists are here to provide expert advice and personalized treatment plans, helping you manage and overcome seizures effectively, improving your quality of life."
         />
       </div>
     </div>

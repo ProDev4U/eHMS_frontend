@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DoctorCard from "./DoctorCard";
 import "./Doctors.css";
 
+import { getAllDoctors } from "../../../services/userService";
+
 function Doctors() {
+  const [doctors, setDoctors] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tmp_data = await getAllDoctors();
+        setDoctors(tmp_data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const getRandomStars = () => {
+    return (Math.random() * 2 + 3).toFixed(1);
+  };
+
   return (
     <div className="doctor-section" id="doctors">
       <div className="dt-title-content">
@@ -19,34 +40,15 @@ function Doctors() {
       </div>
 
       <div className="dt-cards-content">
-        <DoctorCard
-          img={'/img/avatar/profile-1.png'}
-          name="Dr. Kathryn Murphy"
-          title="General Surgeons"
-          stars="4.9"
-          reviews="1800"
-        />
-        <DoctorCard
-          img={'/img/avatar/profile-2.png'}
-          name="Dr. Jacob Jones"
-          title="Hematologists"
-          stars="4.8"
-          reviews="700"
-        />
-        <DoctorCard
-          img={'/img/avatar/profile-3.png'}
-          name="Dr. Jenny Wilson"
-          title="Endocrinologists"
-          stars="4.7"
-          reviews="450"
-        />
-        <DoctorCard
-          img={'/img/avatar/profile-4.png'}
-          name="Dr. Albert Flores"
-          title="Hematologists"
-          stars="4.8"
-          reviews="500"
-        />
+        {doctors.slice(0, 3).map((doctor, index) => (
+          <DoctorCard
+            key={index}
+            img={doctor.avatar}
+            name={doctor.name}
+            title={doctor.title}
+            stars={doctor.stars ? doctor.stars : getRandomStars()}
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import React from "react";
 import "./Footer.css";
-import SubscribeNewsletter from "./SubscribeNewsletter";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -45,19 +44,10 @@ function Footer() {
           <p className="ft-list-title">Legal</p>
           <ul className="ft-list-items">
             <li>
-              <Link to={"/"}>General Info</Link>
+              <Link to={"#privacy-policy"}>Privacy Policy</Link>
             </li>
             <li>
-              <Link to={"/legal"}>Privacy Policy</Link>
-            </li>
-            <li>
-              <Link to={"/legal"}>Terms of Services</Link>
-            </li>
-            <li>
-              <Link to={"/"}>Consultations</Link>
-            </li>
-            <li>
-              <Link to={"/"}>How it Works</Link>
+              <Link to={"#terms-of-service"}>Terms of Services</Link>
             </li>
           </ul>
         </div>

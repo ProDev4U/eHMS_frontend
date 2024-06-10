@@ -1,13 +1,12 @@
 // pages/Home.js
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from '../subhome/Navbar';
 import Hero from "../subhome/Hero";
 import Info from "../subhome/Info";
 import About from "../subhome/About";
-import BookAppointment from "../subhome/BookAppointment";
-import Reviews from "../subhome/Reviews";
+import TermsOfServiceComponent from "../subhome/TermsOfServiceComponent";
+import PrivacyPolicyComponent from "../subhome/PrivacyPolicyComponent";
 import Doctors from "../subhome/Doctors";
 import Footer from "../subhome/Footer";
 
@@ -18,8 +17,8 @@ const Home = () => {
       <Hero />
       <Info />
       <About />
-      <BookAppointment />
-      <Reviews />
+      <TermsOfServiceComponent />
+      <PrivacyPolicyComponent />
       <Doctors />
       <Footer />
     </div>
