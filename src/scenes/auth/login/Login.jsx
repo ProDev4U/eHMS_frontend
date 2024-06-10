@@ -56,7 +56,7 @@ const Login = () => {
         <input required className="input" type="password" name="password" placeholder="Password" onChange={handleChange} />
         <span><a href="/forgot-password">Forgot Password ?</a></span>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button className="login-button" onClick={() => navigate('/register')}>I have no account.</button>
+          {/* <button className="login-button" onClick={() => navigate('/register')}>I have no account.</button> */}
           <button className="login-button" type="submit">Sign In</button>
         </div>
       </form>

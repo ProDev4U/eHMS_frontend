@@ -164,7 +164,7 @@ const Register = () => {
           </div>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button className="login-button" onClick={() => navigate('/login')}>I have already account.</button>
+          {/* <button className="login-button" onClick={() => navigate('/login')}>I have already account.</button> */}
           <button className="login-button" type="submit">Sign Up</button>
         </div>
       </form>

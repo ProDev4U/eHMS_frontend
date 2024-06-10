@@ -8,10 +8,6 @@ import DoctorPrivateRoute from "./privateRouts/DoctorPrivateRoute"
 import PatientPrivateRoute from './privateRouts/PatientPrivateRoute'
 
 //Auth Pages
-import Login from "./scenes/auth/login/Login";
-import Register from "./scenes/auth/register/Register";
-// import ForgotPassword from './scenes/auth/forgotPassword/ForgotPassword';
-// import ResetPassword from './scenes/auth/resetPassword/ResetPassword';
 import Home from "./scenes/auth/home/Home";
 
 //Admin Pages
@@ -47,10 +43,6 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {/* <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} /> */}
         <Route element={<AdminPrivateRoute />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/profile" element={<Profile />} />

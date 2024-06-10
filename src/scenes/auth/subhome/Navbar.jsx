@@ -1,13 +1,12 @@
+// subhome/Navbar.js
+
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ onLoginClick, onRegisterClick }) {
   const [nav, setNav] = useState(false);
 
   const openNav = () => {
@@ -55,8 +54,13 @@ function Navbar() {
           </a>
         </li>
         <li>
-          <a href="/login" className="navbar-links">
+          <a onClick={onLoginClick} className="navbar-links">
             Login
+          </a>
+        </li>
+        <li>
+          <a onClick={onRegisterClick} className="navbar-links">
+            Register
           </a>
         </li>
       </ul>

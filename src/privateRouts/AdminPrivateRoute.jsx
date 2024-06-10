@@ -25,7 +25,7 @@ const AdminPrivateRoute = () => {
       </ThemeProvider>
     </ColorModeContext.Provider>
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/" />
   );
 };
 
