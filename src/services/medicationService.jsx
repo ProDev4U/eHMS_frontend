@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import formatDateString from './utilService';
 
 // fetch medication by patient id
 export const getMedicationByPatientId = async (patientId) => {  
@@ -14,7 +15,7 @@ export const getMedicationByPatientId = async (patientId) => {
         usageText: item.usageText,
         dose: item.dose,
         frequency: item.frequency,
-        date: item.date,
+        date: formatDateString(item.date).split(' ')[0],
         time: item.time,
         useState: item.useState,
       };

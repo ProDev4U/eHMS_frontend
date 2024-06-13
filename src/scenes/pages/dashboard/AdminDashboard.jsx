@@ -9,6 +9,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SocialDistanceOutlinedIcon from '@mui/icons-material/SocialDistanceOutlined';
 // API Calls
 import { getDashboardUsersInfo, getUpcomingAppointments } from "../../../services/dashboardService";
+import formatDateString from '../../../services/utilService';
 
 const AdminDashboard = () => {
   const theme = useTheme();

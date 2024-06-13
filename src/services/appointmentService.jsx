@@ -1,4 +1,5 @@
 import axios from 'axios';
+import formatDateString from './utilService';
 
 // fetch all appoments
 export const getAllAppointments = async (doctorId) => {
@@ -13,7 +14,7 @@ export const getAllAppointments = async (doctorId) => {
         patientName: item.patientName,
         doctorEmail: item.doctorEmail,
         patientEmail: item.patientEmail,
-        date: item.date,
+        date: formatDateString(item.date).split(' ')[0],
         from_time: item.from_time,
         end_time: item.end_time,
         topic: item.topic,
@@ -46,7 +47,7 @@ export const getAppontmentsByPatientId = async (patientId) => {
         doctor_id: item.doctor_id,
         name: item.doctorName,
         email: item.doctorEmail,
-        date: item.date,
+        date: formatDateString(item.date).split(' ')[0],
         from_time: item.from_time,
         end_time: item.end_time,
         topic: item.topic,
@@ -83,7 +84,7 @@ export const getAppontmentsByDoctorId = async (doctorId) => {
         id: item.id,
         name: item.patientName,
         email: item.patientEmail,
-        date: item.date,
+        date: formatDateString(item.date).split(' ')[0],
         from_time: item.from_time,
         end_time: item.end_time,
         topic: item.topic,
@@ -114,7 +115,7 @@ export const getAppointmentsByUserId = async (userId) => {
         id: item.id,
         name: item.patientName,
         email: item.patientEmail,
-        date: item.date,
+        date: formatDateString(item.date).split(' ')[0],
         from_time: item.from_time,
         end_time: item.end_time,
         topic: item.topic,

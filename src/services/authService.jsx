@@ -27,7 +27,7 @@ const authService = {
       const errorData = await response.json();
       throw new Error(errorData.message);
     }
-    const data = await response.json();
+  const data = await response.json();
     return data;
   },
 
@@ -37,6 +37,22 @@ const authService = {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+    const data = await response.json();
+    return data;
+  },
+
+  forgotPassword: async (formData) => {
+    const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     });

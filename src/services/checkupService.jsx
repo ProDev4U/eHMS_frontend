@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import formatDateString from './utilService';
 
 // fetch checkups by patient id
 export const getCheckupsByPatientId = async (patientId) => {
@@ -10,7 +11,7 @@ export const getCheckupsByPatientId = async (patientId) => {
     result.data?.map((item) => {
       let tmp_item = {
         id: item.id,
-        datetime: item.datetime,
+        datetime: formatDateString(item.datetime),
         outputCurrent: item.outputCurrent,
         signalFrequency: item.signalFrequency,
         pulseWidth: item.pulseWidth,

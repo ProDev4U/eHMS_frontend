@@ -107,6 +107,16 @@ function Navbar({ onLoginClick, onRegisterClick }) {
               Contact
             </a>
           </li>
+          <li>
+            <a onClick={onLoginClick} href="#">
+              Login
+            </a>
+          </li>
+          {/* <li>
+            <a onClick={onRegisterClick} href="#">
+              Register
+            </a>
+          </li> */}
         </ul>
       </div>
 

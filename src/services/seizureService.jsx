@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import formatDateString from './utilService';
 
 // fetch seizures by patient id
 export const getSeizuresByPatientId = async (patientId) => {
@@ -14,8 +14,8 @@ export const getSeizuresByPatientId = async (patientId) => {
         description: item.description,
         activity: item.activity,
         mood: item.mood,
-        starttime: item.starttime,
-        endtime: item.endtime,
+        starttime: formatDateString(item.starttime),
+        endtime: formatDateString(item.endtime),
         duration: item.duration,
         possibleTrigger: item.possibleTrigger,
         attachName: item.attachName

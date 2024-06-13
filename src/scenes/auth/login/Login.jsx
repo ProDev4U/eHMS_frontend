@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import './login.css'
 
-const Login = () => {
+const Login = ({ onForgotPasswordClick }) => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
@@ -54,7 +54,7 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="form">
         <input required className="input" type="email" name="email" placeholder="E-mail" onChange={handleChange} />
         <input required className="input" type="password" name="password" placeholder="Password" onChange={handleChange} />
-        <span><a href="/forgot-password">Forgot Password ?</a></span>
+        <span><a href="#" onClick={onForgotPasswordClick}>Forgot Password ?</a></span>
         <div style={{ display: 'flex', gap: '10px' }}>
           {/* <button className="login-button" onClick={() => navigate('/register')}>I have no account.</button> */}
           <button className="login-button" type="submit">Sign In</button>
