@@ -59,6 +59,7 @@ export const getUpcomingAppointments = async () => {
     const result = await axios.get(
         `http://localhost:5000/appointments/upcoming/`,
     );
+    console.log(result.data);
     return result.data;
 };  
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Typography, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Avatar } from "@mui/material";
+import { Box, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Avatar } from "@mui/material";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import StatBox from "../../../components/StatBox";
@@ -9,7 +9,6 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SocialDistanceOutlinedIcon from '@mui/icons-material/SocialDistanceOutlined';
 // API Calls
 import { getDashboardUsersInfo, getUpcomingAppointments } from "../../../services/dashboardService";
-import formatDateString from '../../../services/utilService';
 
 const AdminDashboard = () => {
   const theme = useTheme();
@@ -169,7 +168,7 @@ const AdminDashboard = () => {
                     <TableCell align="left">{appointment.doctorEmail}</TableCell>
                     <TableCell align="left">{appointment.patientName}</TableCell>
                     <TableCell align="left">{appointment.patientEmail}</TableCell>
-                    <TableCell align="left">{appointment.date}</TableCell>
+                    <TableCell align="left">{appointment.date.split('T')[0]}</TableCell>
                     <TableCell align="left">{appointment.from_time}</TableCell>
                     <TableCell align="left">{appointment.topic}</TableCell>
                     <TableCell align="left">{appointment.notes}</TableCell>
